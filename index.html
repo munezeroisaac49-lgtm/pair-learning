@@ -7,17 +7,17 @@
   <meta name="description" content="Pairly — student pairs and assignments workspace">
   <title>Pairly — Student Workspace</title>
 
-  <!-- Keep these connections to the existing stylesheet and JavaScript. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Existing local stylesheet -->
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
   <div class="app-shell">
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
       <div class="brand">
         <div class="brand-mark">P</div>
@@ -46,7 +46,6 @@
       </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main">
 
       <header class="topbar">
@@ -55,9 +54,6 @@
         <div class="days-pill">3-day pair cycle</div>
       </header>
 
-      <!-- =========================
-           PAIRS PAGE
-           ========================= -->
       <section class="page active" id="pairs">
 
         <div class="section-title">
@@ -107,7 +103,6 @@
           </div>
         </div>
 
-        <!-- NAME SEARCH -->
         <div class="pair-search-card">
           <div>
             <p class="eyebrow">PAIR SEARCH</p>
@@ -132,11 +127,10 @@
           </div>
 
           <p class="search-hint">
-            Example: type a first name or last name
+            Search for your own name to find your assigned partner.
           </p>
         </div>
 
-        <!-- SEARCH RESULT -->
         <div class="pair-result" id="pairResult" aria-live="polite">
           <div class="result-placeholder">
             <div class="placeholder-icon">⌕</div>
@@ -145,7 +139,6 @@
           </div>
         </div>
 
-        <!-- PAIR TABLE -->
         <div class="pair-table-section">
           <div class="section-heading-row">
             <div>
@@ -153,31 +146,25 @@
               <h2>Current pairs</h2>
             </div>
 
-            <span class="assignment-count" id="pairCount">39 pairs</span>
+            <span class="assignment-count" id="pairCount">40 pairs</span>
           </div>
 
           <div class="table-wrap">
             <table class="pair-table">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Student</th>
                   <th>Learning Partner</th>
-                  <th>Cycle</th>
                 </tr>
               </thead>
-
-              <tbody id="pairTableBody">
-                <!-- JavaScript fills this table from pairData. -->
-              </tbody>
+              <tbody id="pairTableBody"></tbody>
             </table>
           </div>
         </div>
 
       </section>
 
-      <!-- =========================
-           TASKS PAGE
-           ========================= -->
       <section class="page" id="tasks">
 
         <div class="section-title">
@@ -190,10 +177,7 @@
           </div>
         </div>
 
-        <!-- JavaScript creates the seven subject tabs here. -->
         <div class="subject-tabs" id="subjectTabs"></div>
-
-        <!-- JavaScript creates the selected subject's assignments here. -->
         <div class="task-grid" id="taskGrid"></div>
 
       </section>
@@ -203,280 +187,7 @@
 
   <div class="toast" id="toast"></div>
 
-
-  <!-- PAIR DATA: public student lookup; no login required. -->
-  <script>
-    window.pairData = [
-  {
-    "student": "Frank Gentil",
-    "partner": "Thierry Ndinimana",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Van Joyce",
-    "partner": "Herve",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Kevin Irumva",
-    "partner": "Daella Erica",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Chloe Agasaro",
-    "partner": "Max Dalvin",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Cedrick Sugira",
-    "partner": "Emery Baziga",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Jeanne Uwayisaba",
-    "partner": "Sophie Tumukunde",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Dernick Hirwa",
-    "partner": "Adjira Kabera",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Hope Mary",
-    "partner": "Marianne Dukuzimana",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Kelvin Ibyimanikora",
-    "partner": "Frank Habumugisha",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Ratifa Iragena",
-    "partner": "Adeline Uwimana",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Sandia Gisa",
-    "partner": "Hyacinthe Niyonizera",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Benjamin Mukunzi",
-    "partner": "Moise Steven",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Ella Keyla",
-    "partner": "Fiacre Usengimana",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Josee Happiness Leanne Irasubiza",
-    "partner": "Philbert Irakoze",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Forever Hyacinthe Chance Flora",
-    "partner": "Jane Batakariza",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Glennah Keziah",
-    "partner": "Joy Nkurunziza",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Isaac Sendagire",
-    "partner": "Justin Tuyikunde",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Dieudonne Byishimo",
-    "partner": "Hillary Umuhire",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Benis Divin Irakoze",
-    "partner": "Gilles Corentin Sifa",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Ornella Ihoza",
-    "partner": "Heritier Ineza",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Gaella Umugisha",
-    "partner": "Florent Nisingizwe",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Desire Ntwari Ngeri",
-    "partner": "Bruce Irakoze",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Ines Omega Kamikazi",
-    "partner": "Noella Niyomuhoza",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Olivier Tuyizere",
-    "partner": "Wilson Kanyamfura",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Ange Life Amizero",
-    "partner": "Divine Niyigena",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Nancy Stella Mizero",
-    "partner": "Betty Uwase",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Clement Iradukunda",
-    "partner": "Charlotte Uwizeyimana",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Herve Nyirikinkindi",
-    "partner": "Hamed Hussein",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Isaac Munezero",
-    "partner": "Prince Emmanuel",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Faith Louange",
-    "partner": "Clarisse Kayitavu",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Guilaine Ngoga",
-    "partner": "Gisele Uwase",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Credo Assumptus",
-    "partner": "Presley Mukunzi",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Nadine Umuhire",
-    "partner": "Jean D'amour N.",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Yannick Ineza",
-    "partner": "Flora Uwamariya",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Esther Agasaro Isugi",
-    "partner": "Marius Kigwira",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Irine Gihozo",
-    "partner": "Totis Irakoze",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Kedia Keza Isimbi",
-    "partner": "Bertin Ihirwe",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Germaine Shema",
-    "partner": "Jean Yves T.",
-    "cycle": "Current 3-day cycle"
-  },
-  {
-    "student": "Dieudonne Amani",
-    "partner": "Kheila Verra",
-    "cycle": "Current 3-day cycle"
-  }
-];
-
-    (function () {
-      const pairs = window.pairData;
-      const tableBody = document.getElementById('pairTableBody');
-      const searchInput = document.getElementById('studentSearch');
-      const searchButton = document.getElementById('searchStudent');
-      const result = document.getElementById('pairResult');
-
-      function initials(name) {
-        return name.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0].toUpperCase()).join('');
-      }
-
-      function renderTable() {
-        if (!tableBody) return;
-        tableBody.innerHTML = pairs.map(pair => `
-          <tr>
-            <td>${pair.student}</td>
-            <td>${pair.partner}</td>
-            <td>${pair.cycle}</td>
-          </tr>
-        `).join('');
-      }
-
-      function findPair() {
-        const query = (searchInput?.value || '').trim().toLowerCase();
-        if (!result) return;
-
-        if (!query) {
-          result.innerHTML = `
-            <div class="result-placeholder">
-              <div class="placeholder-icon">⌕</div>
-              <h3>Your pair will appear here</h3>
-              <p>Search your name above to see your assigned learning partner.</p>
-            </div>`;
-          return;
-        }
-
-        const match = pairs.find(pair =>
-          pair.student.toLowerCase().includes(query) || pair.partner.toLowerCase().includes(query)
-        );
-
-        if (!match) {
-          result.innerHTML = `
-            <div class="result-placeholder">
-              <div class="placeholder-icon">?</div>
-              <h3>No pair found</h3>
-              <p>Check the spelling of the name and try again.</p>
-            </div>`;
-          return;
-        }
-
-        const searchedStudent = match.student.toLowerCase().includes(query) ? match.student : match.partner;
-        const partner = searchedStudent === match.student ? match.partner : match.student;
-
-        result.innerHTML = `
-          <div class="pair-result-card">
-            <div class="avatar">${initials(partner)}</div>
-            <div>
-              <p class="eyebrow">YOUR LEARNING PARTNER</p>
-              <h3>${partner}</h3>
-              <p class="muted">Paired with you for the current three-day cycle.</p>
-            </div>
-          </div>`;
-      }
-
-      renderTable();
-      searchButton?.addEventListener('click', findPair);
-      searchInput?.addEventListener('keydown', event => {
-        if (event.key === 'Enter') findPair();
-      });
-    })();
-  </script>
-
-  <!-- Keep this connected to the existing script.js. -->
-  <script src="script.js"></script>
+  <!-- Existing local JavaScript -->
+  <script src="./script.js"></script>
 </body>
 </html>
