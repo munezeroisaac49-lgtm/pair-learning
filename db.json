@@ -1,0 +1,210 @@
+{
+  "account": {
+    "name": "Isaac M.",
+    "role": "Student",
+    "avatar": "IM",
+    "course": "Computer Science",
+    "year": 2
+  },
+
+  "pair": {
+    "name": "Amina Mukamana",
+    "avatar": "AM",
+    "status": "Online now",
+    "course": "Computer Science",
+    "year": 2,
+    "compatibility": 92,
+    "subjects": [
+      "Math",
+      "Programming",
+      "English"
+    ]
+  },
+
+  "dashboard": {
+    "tasksCompleted": 24,
+    "studyTime": "6h 42m",
+    "studyTimeToday": "+32m today",
+    "pairStreak": 7,
+    "bestStreak": 12,
+    "points": 1280,
+    "classRank": "Top 12% of class",
+    "weeklyGoal": 78,
+    "completedThisWeek": 24,
+    "remainingThisWeek": 7,
+    "tasksTogetherThisWeek": 8
+  },
+
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Algebra practice",
+      "subject": "Mathematics",
+      "due": "Today",
+      "status": "completed",
+      "shared": true,
+      "completedBy": "Amina"
+    },
+    {
+      "id": 2,
+      "title": "Review calculus notes",
+      "subject": "Mathematics",
+      "due": "Today",
+      "status": "todo",
+      "shared": true,
+      "completedBy": null
+    },
+    {
+      "id": 3,
+      "title": "Finish programming exercise",
+      "subject": "Computer Science",
+      "due": "Today",
+      "status": "todo",
+      "shared": true,
+      "completedBy": null
+    },
+    {
+      "id": 4,
+      "title": "Read English chapter 6",
+      "subject": "English",
+      "due": "Tomorrow",
+      "status": "completed",
+      "shared": false,
+      "completedBy": "Isaac M."
+    },
+    {
+      "id": 5,
+      "title": "Prepare presentation",
+      "subject": "Computer Science",
+      "due": "Today",
+      "status": "todo",
+      "shared": true,
+      "completedBy": null
+    },
+    {
+      "id": 6,
+      "title": "Practice database questions",
+      "subject": "Computer Science",
+      "due": "Friday",
+      "status": "todo",
+      "shared": true,
+      "completedBy": null
+    },
+    {
+      "id": 7,
+      "title": "Review lecture slides",
+      "subject": "Computer Science",
+      "due": "Friday",
+      "status": "completed",
+      "shared": false,
+      "completedBy": "Isaac M."
+    }
+  ],
+
+  "goals": [
+    {
+      "id": 1,
+      "title": "Master Algebra",
+      "completed": 8,
+      "total": 10,
+      "percentage": 80,
+      "icon": "∑"
+    },
+    {
+      "id": 2,
+      "title": "Build our portfolio",
+      "completed": 3,
+      "total": 5,
+      "percentage": 60,
+      "icon": "⌘"
+    }
+  ],
+
+  "messages": [
+    {
+      "id": 1,
+      "sender": "Amina Mukamana",
+      "senderAvatar": "AM",
+      "type": "other",
+      "message": "Hey Isaac! 👋 I found a great explanation for the calculus problem.",
+      "time": "Today"
+    },
+    {
+      "id": 2,
+      "sender": "Amina Mukamana",
+      "senderAvatar": "AM",
+      "type": "other",
+      "message": "Want me to send it?",
+      "time": "Today"
+    },
+    {
+      "id": 3,
+      "sender": "Isaac M.",
+      "senderAvatar": "IM",
+      "type": "me",
+      "message": "Yes please! That would help a lot 🙌",
+      "time": "Today"
+    },
+    {
+      "id": 4,
+      "sender": "Amina Mukamana",
+      "senderAvatar": "AM",
+      "type": "other",
+      "message": "Sending it now. Also, don’t forget our presentation at 4 PM.",
+      "time": "Today"
+    }
+  ],
+
+  "weeklyActivity": [
+    {
+      "day": "Mon",
+      "minutes": 42
+    },
+    {
+      "day": "Tue",
+      "minutes": 65
+    },
+    {
+      "day": "Wed",
+      "minutes": 48
+    },
+    {
+      "day": "Thu",
+      "minutes": 72
+    },
+    {
+      "day": "Fri",
+      "minutes": 55
+    },
+    {
+      "day": "Sat",
+      "minutes": 38
+    },
+    {
+      "day": "Sun",
+      "minutes": 20
+    }
+  ],
+
+  "achievements": [
+    {
+      "title": "7 Day Streak",
+      "description": "Studied together for a week",
+      "icon": "🔥",
+      "status": "Unlocked"
+    },
+    {
+      "title": "Perfect Pair",
+      "description": "Completed 5 shared tasks",
+      "icon": "🤝",
+      "status": "Unlocked"
+    },
+    {
+      "title": "Study Champions",
+      "description": "Reach 2,000 pair points",
+      "icon": "🏆",
+      "status": "locked",
+      "remaining": 720
+    }
+  ]
+}
