@@ -1,7 +1,51 @@
-/*
-  Pairly Student Workspace
-  Data can later be replaced with a real database/API.
+/* Pairly — Student Workspace
+   New student pairs
 */
+
+const pairData = [
+  { student: "Frank Gentil", partner: "Thierry Ndinimana", cycle: "Current 3-day cycle" },
+  { student: "Van Joyce", partner: "Herve", cycle: "Current 3-day cycle" },
+  { student: "Kevin Irumva", partner: "Daella Erica", cycle: "Current 3-day cycle" },
+  { student: "Chloe Agasaro", partner: "Max Dalvin", cycle: "Current 3-day cycle" },
+  { student: "Cedrick Sugira", partner: "Emery Baziga", cycle: "Current 3-day cycle" },
+  { student: "Jeanne Uwayisaba", partner: "Sophie Tumukunde", cycle: "Current 3-day cycle" },
+  { student: "Dernick Hirwa", partner: "Adjira Kabera", cycle: "Current 3-day cycle" },
+  { student: "Hope Mary", partner: "Marianne Dukuzimana", cycle: "Current 3-day cycle" },
+  { student: "Kelvin Ibyimanikora", partner: "Frank Habumugisha", cycle: "Current 3-day cycle" },
+  { student: "Ratifa Iragena", partner: "Adeline Uwimana", cycle: "Current 3-day cycle" },
+  { student: "Sandia Gisa", partner: "Hyacinthe Niyonizera", cycle: "Current 3-day cycle" },
+  { student: "Benjamin Mukunzi", partner: "Moise Steven", cycle: "Current 3-day cycle" },
+  { student: "Ella Keyla", partner: "Fiacre Usengimana", cycle: "Current 3-day cycle" },
+  { student: "Josee Happiness", partner: "Leanne Irasubiza", cycle: "Current 3-day cycle" },
+  { student: "Philbert Irakoze", partner: "Forever Hyacinthe", cycle: "Current 3-day cycle" },
+  { student: "Chance Flora", partner: "Jane Batakariza", cycle: "Current 3-day cycle" },
+  { student: "Glennah Keziah", partner: "Joy Nkurunziza", cycle: "Current 3-day cycle" },
+  { student: "Isaac Sendagire", partner: "Justin Tuyikunde", cycle: "Current 3-day cycle" },
+  { student: "Dieudonne Byishimo", partner: "Hillary Umuhire", cycle: "Current 3-day cycle" },
+  { student: "Benis Divin Irakoze", partner: "Gilles Corentin", cycle: "Current 3-day cycle" },
+  { student: "Sifa Ornella Ihoza", partner: "Heritier Ineza", cycle: "Current 3-day cycle" },
+  { student: "Gaella Umugisha", partner: "Florent Nisingizwe", cycle: "Current 3-day cycle" },
+  { student: "Desire Ntwari Ngeri", partner: "Bruce Irakoze", cycle: "Current 3-day cycle" },
+  { student: "Ines Omega Kamikazi", partner: "Noella Niyomuhoza", cycle: "Current 3-day cycle" },
+  { student: "Olivier Tuyizere", partner: "Wilson Kanyamfura", cycle: "Current 3-day cycle" },
+  { student: "Ange Life Amizero", partner: "Divine Niyigena", cycle: "Current 3-day cycle" },
+  { student: "Nancy Stella Mizero", partner: "Betty Uwase", cycle: "Current 3-day cycle" },
+  { student: "Clement Iradukunda", partner: "Charlotte Uwizeyimana", cycle: "Current 3-day cycle" },
+  { student: "Herve Nyirikinkindi", partner: "Hamed Hussein", cycle: "Current 3-day cycle" },
+  { student: "Isaac Munezero", partner: "Prince Emmanuel", cycle: "Current 3-day cycle" },
+  { student: "Faith Louange", partner: "Clarisse Kayitavu", cycle: "Current 3-day cycle" },
+  { student: "Guilaine Ngoga", partner: "Gisele Uwase", cycle: "Current 3-day cycle" },
+  { student: "Credo Assumptus", partner: "Presley Mukunzi", cycle: "Current 3-day cycle" },
+  { student: "Nadine Umuhire", partner: "Jean D'amour N.", cycle: "Current 3-day cycle" },
+  { student: "Yannick Ineza", partner: "Flora Uwamariya", cycle: "Current 3-day cycle" },
+  { student: "Esther Agasaro Isugi", partner: "Marius Kigwira", cycle: "Current 3-day cycle" },
+  { student: "Irine Gihozo", partner: "Totis Irakoze", cycle: "Current 3-day cycle" },
+  { student: "Kedia Keza Isimbi", partner: "Bertin Ihirwe", cycle: "Current 3-day cycle" },
+  { student: "Germaine Shema", partner: "Jean Yves T.", cycle: "Current 3-day cycle" },
+  { student: "Dieudonne Amani", partner: "Kheila Verra", cycle: "Current 3-day cycle" }
+];
+
+const unassignedStudents = ["Munezero Berithile"];
 
 const subjects = [
   "Writer's Workshop",
@@ -13,363 +57,263 @@ const subjects = [
   "Mental health"
 ];
 
-/*
-  PAIR DATA
-  -------------------------------
-  Replace these sample students with your real student list.
-
-  For each pair, add exactly two students:
-  {
-    id: 1,
-    student1: "Student One",
-    student2: "Student Two",
-    cycle: "Day 1–3"
-  }
-
-  Later this same structure can be loaded from Supabase,
-  Firebase, or another database without changing the page design.
-*/
-const pairData = [
-  {
-    id: 1,
-    student1: "John Smith",
-    student2: "David Paul",
-    cycle: "Day 1–3"
-  },
-  {
-    id: 2,
-    student1: "Sarah Grace",
-    student2: "Michael John",
-    cycle: "Day 1–3"
-  },
-  {
-    id: 3,
-    student1: "Emma Claire",
-    student2: "Daniel James",
-    cycle: "Day 1–3"
-  },
-  {
-    id: 4,
-    student1: "Peter Samuel",
-    student2: "Anna Marie",
-    cycle: "Day 1–3"
-  }
-];
-
-/*
-  TASK DATA
-  -------------------------------
-  Replace the sample assignment text with your real assignments.
-  You can add as many assignments as you need under each subject.
-*/
-const tasks = {
-  "Writer's Workshop": [
-    "Complete the assigned writing exercise",
-    "Review the writing work with your pair"
-  ],
-
-  "Guided Reading": [
-    "Complete today's assigned reading",
-    "Discuss the main ideas with your pair"
-  ],
-
-  "How To Learn": [
-    "Complete the assigned learning activity",
-    "Share one useful learning strategy with your pair"
-  ],
-
-  "Language Lab": [
-    "Complete the assigned language practice",
-    "Check answers together"
-  ],
-
-  "Communication art": [
-    "Complete the communication activity",
-    "Practice the assignment with your pair"
-  ],
-
-  "Discipleship": [
-    "Complete today's discipleship assignment",
-    "Discuss your reflections with your pair"
-  ],
-
-  "Mental health": [
-    "Complete the assigned mental-health activity",
-    "Share one helpful takeaway with your pair"
-  ]
+const assignments = {
+  "Writer's Workshop": [],
+  "Guided Reading": [],
+  "How To Learn": [],
+  "Language Lab": [],
+  "Communication art": [],
+  "Discipleship": [],
+  "Mental health": []
 };
 
-const tabs = document.getElementById("subjectTabs");
-const grid = document.getElementById("taskGrid");
-const searchInput = document.getElementById("studentSearch");
-const searchButton = document.getElementById("searchStudent");
-const result = document.getElementById("pairResult");
-const tableBody = document.getElementById("pairTableBody");
-const pairCount = document.getElementById("pairCount");
-
-function normalize(value) {
-  return String(value || "").trim().toLowerCase();
-}
-
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, character => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  }[character]));
-}
-
-/* ---------- PAIRS ---------- */
-
-function renderPairTable() {
-  if (!tableBody) return;
-
-  tableBody.innerHTML = pairData.map(pair => `
-    <tr>
-      <td class="student-cell">${escapeHtml(pair.student1)}</td>
-      <td class="partner-cell">${escapeHtml(pair.student2)}</td>
-      <td class="cycle-cell">${escapeHtml(pair.cycle)}</td>
-    </tr>
-    <tr>
-      <td class="student-cell">${escapeHtml(pair.student2)}</td>
-      <td class="partner-cell">${escapeHtml(pair.student1)}</td>
-      <td class="cycle-cell">${escapeHtml(pair.cycle)}</td>
-    </tr>
-  `).join("");
-
-  if (pairCount) {
-    pairCount.textContent = `${pairData.length} pairs`;
-  }
-}
-
-function findStudentPair(searchTerm) {
-  const query = normalize(searchTerm);
-
-  if (!query) return null;
-
-  for (const pair of pairData) {
-    const student1 = normalize(pair.student1);
-    const student2 = normalize(pair.student2);
-
-    if (student1.includes(query)) {
-      return { pair, student: pair.student1, partner: pair.student2 };
-    }
-
-    if (student2.includes(query)) {
-      return { pair, student: pair.student2, partner: pair.student1 };
-    }
-  }
-
-  return null;
-}
-
-function showPairResult(searchTerm) {
-  const found = findStudentPair(searchTerm);
-
-  if (!searchTerm.trim()) {
-    result.innerHTML = `
-      <div class="result-placeholder">
-        <div class="placeholder-icon">⌕</div>
-        <h3>Search for your name</h3>
-        <p>Enter your first name or last name above.</p>
-      </div>
-    `;
-    return;
-  }
-
-  if (!found) {
-    result.innerHTML = `
-      <div class="result-placeholder">
-        <div class="placeholder-icon">?</div>
-        <h3>Student not found</h3>
-        <p>Check the spelling or try another part of your name.</p>
-      </div>
-    `;
-    showToast("No matching student found");
-    return;
-  }
-
-  result.innerHTML = `
-    <div class="pair-result-card">
-      <div class="result-person">
-        <div class="result-avatar">S1</div>
-        <small>YOU</small>
-        <strong>${escapeHtml(found.student)}</strong>
-      </div>
-
-      <div class="result-arrow">↔</div>
-
-      <div class="result-person">
-        <div class="result-avatar partner">S2</div>
-        <small>YOUR LEARNING PARTNER</small>
-        <strong>${escapeHtml(found.partner)}</strong>
-      </div>
-
-      <div class="result-cycle">
-        🤝 Current pairing cycle: ${escapeHtml(found.pair.cycle)}
-      </div>
-    </div>
-  `;
-
-  showToast(`Your pair is ${found.partner} ✨`);
-}
-
-if (searchButton) {
-  searchButton.addEventListener("click", () => {
-    showPairResult(searchInput.value);
-  });
-}
-
-if (searchInput) {
-  searchInput.addEventListener("keydown", event => {
-    if (event.key === "Enter") {
-      showPairResult(searchInput.value);
-    }
-  });
-}
-
-/* ---------- TASKS ---------- */
-
-function renderTabs() {
-  if (!tabs) return;
-
-  tabs.innerHTML = subjects.map((subject, index) => `
-    <button
-      class="subject-tab ${index === 0 ? "active" : ""}"
-      data-subject="${escapeHtml(subject)}"
-    >
-      ${escapeHtml(subject)}
-    </button>
-  `).join("");
-}
-
-function renderTasks(subject = subjects[0]) {
-  if (!grid) return;
-
-  const subjectTasks = tasks[subject] || [];
-
-  grid.innerHTML = `
-    <div class="task-subject-heading">
-      <div>
-        <span class="subject-dot"></span>
-        <h2>${escapeHtml(subject)}</h2>
-      </div>
-      <span class="assignment-count">
-        ${subjectTasks.length} assignment${subjectTasks.length === 1 ? "" : "s"}
-      </span>
-    </div>
-
-    ${
-      subjectTasks.length
-        ? subjectTasks.map((task, index) => `
-          <div class="assignment-card">
-            <button
-              class="task-check"
-              data-index="${index}"
-              aria-label="Mark task complete"
-            >✓</button>
-
-            <div class="assignment-info">
-              <span>Assignment ${index + 1}</span>
-              <h3>${escapeHtml(task)}</h3>
-              <p>Work with your assigned pair during the current 3-day cycle.</p>
-            </div>
-
-            <span class="pair-tag">Pair work</span>
-          </div>
-        `).join("")
-        : `<div class="no-results">No assignments have been added for this subject yet.</div>`
-    }
-  `;
-}
-
-if (tabs) {
-  tabs.addEventListener("click", event => {
-    const tab = event.target.closest(".subject-tab");
-    if (!tab) return;
-
-    document.querySelectorAll(".subject-tab").forEach(item => {
-      item.classList.remove("active");
-    });
-
-    tab.classList.add("active");
-    renderTasks(tab.dataset.subject);
-  });
-}
-
-if (grid) {
-  grid.addEventListener("click", event => {
-    const check = event.target.closest(".task-check");
-    if (!check) return;
-
-    check.classList.toggle("done");
-    showToast(
-      check.classList.contains("done")
-        ? "Assignment completed ✓"
-        : "Assignment reopened"
-    );
-  });
-}
-
-/* ---------- NAVIGATION ---------- */
-
-document.querySelectorAll(".nav-item[data-page]").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".nav-item").forEach(item => {
-      item.classList.remove("active");
-    });
-
-    button.classList.add("active");
-
-    document.querySelectorAll(".page").forEach(page => {
-      page.classList.remove("active");
-    });
-
-    const destination = document.getElementById(button.dataset.page);
-
-    if (destination) {
-      destination.classList.add("active");
-    }
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
-    document.querySelector(".sidebar")?.classList.remove("open");
-  });
+document.addEventListener("DOMContentLoaded", function () {
+  setupNavigation();
+  renderPairTable();
+  setupPairSearch();
+  renderTasks();
+  setupMobileMenu();
 });
 
-/* ---------- MOBILE MENU ---------- */
 
-const mobileMenu = document.getElementById("mobileMenu");
+function setupNavigation() {
+  const navItems = document.querySelectorAll(".nav-item");
+  const pages = document.querySelectorAll(".page");
 
-if (mobileMenu) {
-  mobileMenu.addEventListener("click", () => {
-    document.querySelector(".sidebar")?.classList.toggle("open");
+  navItems.forEach(function (item) {
+    item.addEventListener("click", function () {
+      const target = item.dataset.page;
+
+      navItems.forEach(function (nav) {
+        nav.classList.toggle("active", nav === item);
+      });
+
+      pages.forEach(function (page) {
+        page.classList.toggle("active", page.id === target);
+      });
+    });
   });
 }
 
-/* ---------- TOAST ---------- */
 
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  if (!toast) return;
+function renderPairTable() {
+  const tbody = document.getElementById("pairTableBody");
+  const count = document.getElementById("pairCount");
 
-  toast.textContent = message;
-  toast.classList.add("show");
+  if (!tbody) return;
 
-  clearTimeout(window.pairlyToastTimer);
+  tbody.innerHTML = "";
 
-  window.pairlyToastTimer = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2200);
+  pairData.forEach(function (pair, index) {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${escapeHtml(pair.student)}</td>
+      <td>${escapeHtml(pair.partner)}</td>
+    `;
+
+    tbody.appendChild(row);
+  });
+
+  if (count) {
+    count.textContent = `${pairData.length} pairs`;
+  }
 }
 
-/* ---------- INITIALIZE ---------- */
 
-renderPairTable();
-renderTabs();
-renderTasks();
+function setupPairSearch() {
+  const input = document.getElementById("studentSearch");
+  const button = document.getElementById("searchStudent");
+
+  if (!input || !button) return;
+
+  function search() {
+    const query = input.value.trim().toLowerCase();
+
+    if (!query) {
+      showPairPlaceholder();
+      return;
+    }
+
+    const match = pairData.find(function (pair) {
+      return (
+        pair.student.toLowerCase().includes(query) ||
+        pair.partner.toLowerCase().includes(query)
+      );
+    });
+
+    if (!match) {
+      const unassigned = unassignedStudents.find(function (name) {
+        return name.toLowerCase().includes(query);
+      });
+
+      if (unassigned) {
+        showPairResult(
+          unassigned,
+          "No partner assigned",
+          "This student is currently listed without a partner."
+        );
+      } else {
+        showPairNotFound();
+      }
+
+      return;
+    }
+
+    const searchedStudent = match.student.toLowerCase().includes(query)
+      ? match.student
+      : match.partner;
+
+    const partner =
+      searchedStudent === match.student
+        ? match.partner
+        : match.student;
+
+    showPairResult(
+      searchedStudent,
+      partner,
+      "Current 3-day cycle"
+    );
+  }
+
+  button.addEventListener("click", search);
+
+  input.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      search();
+    }
+  });
+}
+
+
+function showPairResult(student, partner, detail) {
+  const result = document.getElementById("pairResult");
+
+  if (!result) return;
+
+  result.innerHTML = `
+    <div class="pair-profile panel">
+      <div>
+        <p class="eyebrow">YOUR PAIR</p>
+        <h2>${escapeHtml(student)} ↔ ${escapeHtml(partner)}</h2>
+        <p class="muted">${escapeHtml(detail)}</p>
+      </div>
+    </div>
+  `;
+}
+
+
+function showPairPlaceholder() {
+  const result = document.getElementById("pairResult");
+
+  if (!result) return;
+
+  result.innerHTML = `
+    <div class="result-placeholder">
+      <div class="placeholder-icon">⌕</div>
+      <h3>Your pair will appear here</h3>
+      <p>Search your name above to see your assigned learning partner.</p>
+    </div>
+  `;
+}
+
+
+function showPairNotFound() {
+  const result = document.getElementById("pairResult");
+
+  if (!result) return;
+
+  result.innerHTML = `
+    <div class="result-placeholder">
+      <div class="placeholder-icon">?</div>
+      <h3>Student not found</h3>
+      <p>Check the spelling and try searching again.</p>
+    </div>
+  `;
+}
+
+
+function renderTasks() {
+  const tabs = document.getElementById("subjectTabs");
+  const grid = document.getElementById("taskGrid");
+
+  if (!tabs || !grid) return;
+
+  tabs.innerHTML = "";
+
+  subjects.forEach(function (subject, index) {
+    const button = document.createElement("button");
+
+    button.className =
+      "subject-tab" + (index === 0 ? " active" : "");
+
+    button.textContent = subject;
+
+    button.addEventListener("click", function () {
+      document.querySelectorAll(".subject-tab").forEach(function (tab) {
+        tab.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      renderSubjectTasks(subject);
+    });
+
+    tabs.appendChild(button);
+  });
+
+  renderSubjectTasks(subjects[0]);
+}
+
+
+function renderSubjectTasks(subject) {
+  const grid = document.getElementById("taskGrid");
+
+  if (!grid) return;
+
+  const items = assignments[subject] || [];
+
+  if (!items.length) {
+    grid.innerHTML = `
+      <div class="result-placeholder">
+        <h3>No assignments added yet</h3>
+        <p>Assignments for ${escapeHtml(subject)} can be added in script.js.</p>
+      </div>
+    `;
+
+    return;
+  }
+
+  grid.innerHTML = items
+    .map(function (item) {
+      return `
+        <article class="task-card">
+          <h3>${escapeHtml(item.title || item)}</h3>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+
+function setupMobileMenu() {
+  const button = document.getElementById("mobileMenu");
+  const sidebar = document.querySelector(".sidebar");
+
+  if (!button || !sidebar) return;
+
+  button.addEventListener("click", function () {
+    sidebar.classList.toggle("open");
+  });
+}
+
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
