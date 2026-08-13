@@ -4,109 +4,206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pairly — Student Pair Workspace</title>
+  <meta name="description" content="Pairly — student pairs and assignments workspace">
+  <title>Pairly — Student Workspace</title>
+
+  <!-- Keep these connections to the existing stylesheet and JavaScript. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark">P</div>
-      <div><strong>Pairly</strong><span>Learn together</span></div>
-    </div>
+  <div class="app-shell">
 
-    <nav class="nav">
-      <button class="nav-item active" data-page="pairs"><span>♧</span> Pairs</button>
-      <button class="nav-item" data-page="tasks"><span>✓</span> Tasks</button>
-    </nav>
-
-    <div class="sidebar-note">
-      <div>🤝</div>
-      <strong>Help your pair</strong>
-      <p>Each pair works together for 3 days.</p>
-    </div>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <button class="mobile-menu" id="mobileMenu">☰</button>
-      <div class="top-title">Student Workspace</div>
-      <div class="days-pill">3-day pair cycle</div>
-    </header>
-
-    <!-- PAIRS -->
-    <section class="page active" id="pairs">
-      <div class="section-title">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
         <div>
-          <p class="eyebrow">STUDENT PAIRS</p>
-          <h1>Pairs</h1>
-          <p class="muted">Students are grouped in pairs to support and treat each other well for three days.</p>
+          <strong>Pairly</strong>
+          <span>Learn together</span>
         </div>
       </div>
 
-      <div class="pair-hero">
-        <div>
-          <span class="pill green">● Current 3-day cycle</span>
-          <h2>Learn together.<br><em>Support each other.</em></h2>
-          <p>Find your pair, see the three-day cycle, and work together on the assignments in your subjects.</p>
-        </div>
-        <div class="cycle">
-          <div class="cycle-day active"><b>1</b><span>Day 1</span></div>
-          <div class="cycle-line"></div>
-          <div class="cycle-day"><b>2</b><span>Day 2</span></div>
-          <div class="cycle-line"></div>
-          <div class="cycle-day"><b>3</b><span>Day 3</span></div>
-        </div>
-      </div>
+      <nav class="nav" aria-label="Main navigation">
+        <button class="nav-item active" data-page="pairs">
+          <span>♧</span>
+          Pairs
+        </button>
 
-      <div class="pair-tools">
-        <div class="pair-code-card">
-          <p class="eyebrow">PAIR CODE</p>
-          <h3 id="currentPair">Your assigned pair</h3>
-          <p>Enter the code given by your teacher to view your pair.</p>
-          <div class="code-row">
-            <input id="pairCodeInput" placeholder="PAIR-0000" maxlength="12">
-            <button class="primary" id="loadPair">View pair</button>
+        <button class="nav-item" data-page="tasks">
+          <span>✓</span>
+          Tasks
+        </button>
+      </nav>
+
+      <div class="sidebar-note">
+        <div>🤝</div>
+        <strong>3-day pair cycle</strong>
+        <p>Find your partner and help each other learn during the current cycle.</p>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button>
+        <div class="top-title">Student Workspace</div>
+        <div class="days-pill">3-day pair cycle</div>
+      </header>
+
+      <!-- =========================
+           PAIRS PAGE
+           ========================= -->
+      <section class="page active" id="pairs">
+
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">STUDENT PAIRS</p>
+            <h1>Find Your Pair</h1>
+            <p class="muted">
+              Search your name to see the student you are paired with for the current three-day cycle.
+            </p>
           </div>
         </div>
 
-        <div class="pair-card">
-          <div class="pair-card-top">
-            <span class="online">● Pair active</span>
-            <span class="cycle-label">3 days</span>
+        <div class="pair-hero">
+          <div>
+            <span class="pill green">● Current 3-day cycle</span>
+
+            <h2>
+              Learn together.<br>
+              <em>Support each other.</em>
+            </h2>
+
+            <p>
+              Every student is placed in a pair for three days.
+              Search your name below to find your partner.
+            </p>
           </div>
-          <div class="pair-people">
-            <div class="student-placeholder">S1</div>
-            <div class="pair-link">↔</div>
-            <div class="student-placeholder second">S2</div>
+
+          <div class="cycle" aria-label="Three day cycle">
+            <div class="cycle-day active">
+              <b>1</b>
+              <span>Day 1</span>
+            </div>
+
+            <div class="cycle-line"></div>
+
+            <div class="cycle-day">
+              <b>2</b>
+              <span>Day 2</span>
+            </div>
+
+            <div class="cycle-line"></div>
+
+            <div class="cycle-day">
+              <b>3</b>
+              <span>Day 3</span>
+            </div>
           </div>
-          <h3>Assigned Learning Pair</h3>
-          <p>Work together, explain difficult ideas, and help each other complete the assignments.</p>
         </div>
-      </div>
-    </section>
 
-    <!-- TASKS -->
-    <section class="page" id="tasks">
-      <div class="section-title">
-        <div>
-          <p class="eyebrow">ASSIGNMENTS</p>
-          <h1>Tasks</h1>
-          <p class="muted">Assignments for the seven student subjects.</p>
+        <!-- NAME SEARCH -->
+        <div class="pair-search-card">
+          <div>
+            <p class="eyebrow">PAIR SEARCH</p>
+            <h2>Who is your learning partner?</h2>
+            <p class="muted">
+              Enter your first name or last name. Your assigned pair will appear below.
+            </p>
+          </div>
+
+          <div class="search-row">
+            <input
+              id="studentSearch"
+              type="search"
+              placeholder="Search your name..."
+              autocomplete="off"
+              aria-label="Search your name"
+            >
+
+            <button class="primary" id="searchStudent">
+              Find my pair
+            </button>
+          </div>
+
+          <p class="search-hint">
+            Example: type <strong>John</strong> or <strong>Smith</strong>
+          </p>
         </div>
-      </div>
 
-      <div class="subject-tabs" id="subjectTabs"></div>
-      <div class="task-grid" id="taskGrid"></div>
-    </section>
-  </main>
-</div>
+        <!-- SEARCH RESULT -->
+        <div class="pair-result" id="pairResult" aria-live="polite">
+          <div class="result-placeholder">
+            <div class="placeholder-icon">⌕</div>
+            <h3>Your pair will appear here</h3>
+            <p>Search your name above to see your assigned learning partner.</p>
+          </div>
+        </div>
 
-<div class="toast" id="toast"></div>
+        <!-- PAIR TABLE -->
+        <div class="pair-table-section">
+          <div class="section-heading-row">
+            <div>
+              <p class="eyebrow">PAIR DIRECTORY</p>
+              <h2>Current pairs</h2>
+            </div>
 
-<script src="script.js"></script>
+            <span class="assignment-count" id="pairCount">0 pairs</span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="pair-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Learning Partner</th>
+                  <th>Cycle</th>
+                </tr>
+              </thead>
+
+              <tbody id="pairTableBody">
+                <!-- JavaScript fills this table from pairData. -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =========================
+           TASKS PAGE
+           ========================= -->
+      <section class="page" id="tasks">
+
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">ASSIGNMENTS</p>
+            <h1>Tasks</h1>
+            <p class="muted">
+              View assignments for the seven student subjects.
+            </p>
+          </div>
+        </div>
+
+        <!-- JavaScript creates the seven subject tabs here. -->
+        <div class="subject-tabs" id="subjectTabs"></div>
+
+        <!-- JavaScript creates the selected subject's assignments here. -->
+        <div class="task-grid" id="taskGrid"></div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Keep this connected to the existing script.js. -->
+  <script src="script.js"></script>
 </body>
 </html>
