@@ -1,1 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pairly — Learn Better Together</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div><strong>Pairly</strong><span>Learn better together</span></div>
+      </div>
 
+      <nav class="nav">
+        <button class="nav-item active" data-page="dashboard"><span>⌂</span> Dashboard</button>
+        <button class="nav-item" data-page="tasks"><span>✓</span> My Tasks <b class="badge">4</b></button>
+        <button class="nav-item" data-page="pair"><span>♡</span> My Pair</button>
+        <button class="nav-item" data-page="messages"><span>◌</span> Messages <b class="badge soft">2</b></button>
+        <button class="nav-item" data-page="progress"><span>↗</span> Progress</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="tip-card">
+          <div class="spark">✦</div>
+          <strong>Small steps, big wins.</strong>
+          <p>Help your pair today and keep the learning streak alive.</p>
+        </div>
+        <button class="nav-item"><span>⚙</span> Settings</button>
+        <div class="user-mini">
+          <div class="avatar">IM</div>
+          <div><strong>Isaac M.</strong><span>Student</span></div>
+          <span class="more">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+        <div class="search"><span>⌕</span><input id="searchInput" placeholder="Search tasks, students, subjects..."></div>
+        <div class="top-actions">
+          <button class="icon-btn" title="Notifications">♢<i></i></button>
+          <div class="avatar small">IM</div>
+        </div>
+      </header>
+
+      <section class="page active" id="dashboard">
+        <div class="welcome">
+          <div>
+            <p class="eyebrow">THURSDAY · AUGUST 13</p>
+            <h1>Good afternoon, Isaac <span>✦</span></h1>
+            <p class="muted">Ready to make today a little more productive?</p>
+          </div>
+          <button class="primary" id="addTaskBtn">＋ Add task</button>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-copy">
+            <div class="pill green">● Your pair is online</div>
+            <h2>Learning is better<br><em>when you do it together.</em></h2>
+            <p>You and your partner have completed 8 tasks together this week. Keep the momentum going!</p>
+            <button class="light-btn" data-page-target="pair">Open pair space →</button>
+          </div>
+          <div class="hero-visual">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="floating-card card-left">✓ <span>Homework<br><b>completed</b></span></div>
+            <div class="pair-avatars"><div class="avatar big">IM</div><div class="connection">↔</div><div class="avatar big second">AM</div></div>
+            <div class="floating-card card-right">🔥 <span>7 day<br><b>streak</b></span></div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon purple">✓</div><div><span>Tasks completed</span><strong>24</strong><small>+18% this week</small></div></div>
+          <div class="stat-card"><div class="stat-icon orange">◷</div><div><span>Study time</span><strong>6h 42m</strong><small>+32m today</small></div></div>
+          <div class="stat-card"><div class="stat-icon blue">⚡</div><div><span>Pair streak</span><strong>7 days</strong><small>Best: 12 days</small></div></div>
+          <div class="stat-card"><div class="stat-icon pink">★</div><div><span>Points earned</span><strong>1,280</strong><small>Top 12% of class</small></div></div>
+        </div>
+
+        <div class="content-grid">
+          <div class="panel">
+            <div class="panel-head"><div><h3>Today’s tasks</h3><p>Keep your shared goals moving.</p></div><button class="text-btn" data-page-target="tasks">View all →</button></div>
+            <div id="taskList" class="task-list"></div>
+          </div>
+
+          <div class="panel progress-panel">
+            <div class="panel-head"><div><h3>Weekly progress</h3><p>Your shared learning rhythm.</p></div><span class="select">This week⌄</span></div>
+            <div class="progress-ring"><div><strong>78%</strong><span>goal reached</span></div></div>
+            <div class="legend"><span><i></i> Completed <b>24</b></span><span><i></i> Remaining <b>7</b></span></div>
+            <div class="mini-message"><div class="avatar tiny second">AM</div><div><b>Amina</b> finished <strong>Algebra practice</strong><span>12 minutes ago</span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="tasks">
+        <div class="section-title"><div><p class="eyebrow">YOUR WORKSPACE</p><h1>Tasks</h1><p class="muted">Plan, complete, and share work with your pair.</p></div><button class="primary" id="addTaskBtn2">＋ Add task</button></div>
+        <div class="filter-row"><button class="filter active">All <b>7</b></button><button class="filter">To do <b>4</b></button><button class="filter">Completed <b>3</b></button><button class="filter">Shared <b>5</b></button></div>
+        <div class="panel task-board" id="allTasks"></div>
+      </section>
+
+      <section class="page" id="pair">
+        <div class="section-title"><div><p class="eyebrow">YOUR LEARNING PARTNER</p><h1>My Pair</h1><p class="muted">A space for two students to help each other succeed.</p></div><button class="secondary">♡ Send appreciation</button></div>
+        <div class="pair-profile panel">
+          <div class="profile-banner"></div>
+          <div class="profile-content">
+            <div class="avatar profile-avatar second">AM</div>
+            <div class="profile-main"><span class="online">● Online now</span><h2>Amina Mukamana</h2><p>Computer Science · Year 2</p><div class="chips"><span>Math</span><span>Programming</span><span>English</span></div></div>
+            <div class="pair-score"><strong>92%</strong><span>compatibility</span></div>
+          </div>
+        </div>
+        <div class="content-grid pair-grid">
+          <div class="panel"><div class="panel-head"><div><h3>Shared goals</h3><p>Things you're working toward together.</p></div><button class="text-btn">＋ Goal</button></div>
+            <div class="goal"><div class="goal-icon">∑</div><div><b>Master Algebra</b><span>8 of 10 sessions</span><div class="bar"><i style="width:80%"></i></div></div><strong>80%</strong></div>
+            <div class="goal"><div class="goal-icon">⌘</div><div><b>Build our portfolio</b><span>3 of 5 projects</span><div class="bar"><i style="width:60%"></i></div></div><strong>60%</strong></div>
+          </div>
+          <div class="panel"><div class="panel-head"><div><h3>Quick message</h3><p>Encourage your pair.</p></div></div><div class="message-preview"><div class="avatar second">AM</div><div><b>Amina</b><p>“I found a great explanation for the calculus problem. Want me to send it?”</p><span>12 min ago</span></div></div><button class="primary full" data-page-target="messages">Reply to Amina →</button></div>
+        </div>
+      </section>
+
+      <section class="page" id="messages">
+        <div class="section-title"><div><p class="eyebrow">STAY CONNECTED</p><h1>Messages</h1><p class="muted">Ask questions, share resources, celebrate wins.</p></div></div>
+        <div class="chat panel">
+          <div class="chat-head"><div class="avatar second">AM</div><div><b>Amina Mukamana</b><span class="online">● Online</span></div><button class="icon-btn">•••</button></div>
+          <div class="chat-body" id="chatBody">
+            <div class="date-divider">Today</div>
+            <div class="bubble other">Hey Isaac! 👋 I found a great explanation for the calculus problem.</div>
+            <div class="bubble other">Want me to send it?</div>
+            <div class="bubble me">Yes please! That would help a lot 🙌</div>
+            <div class="bubble other">Sending it now. Also, don’t forget our presentation at 4 PM.</div>
+          </div>
+          <form class="chat-input" id="chatForm"><input id="chatInput" placeholder="Write a message..." autocomplete="off"><button>➤</button></form>
+        </div>
+      </section>
+
+      <section class="page" id="progress">
+        <div class="section-title"><div><p class="eyebrow">KEEP GROWING</p><h1>Progress</h1><p class="muted">See how your learning partnership is developing.</p></div></div>
+        <div class="content-grid">
+          <div class="panel"><div class="panel-head"><div><h3>Study activity</h3><p>Minutes studied together this week.</p></div></div><div class="chart" id="chart"></div></div>
+          <div class="panel achievements"><div class="panel-head"><div><h3>Achievements</h3><p>Milestones you've unlocked.</p></div></div><div class="achievement"><span>🔥</span><div><b>7 Day Streak</b><small>Studied together for a week</small></div><em>Unlocked</em></div><div class="achievement"><span>🤝</span><div><b>Perfect Pair</b><small>Completed 5 shared tasks</small></div><em>Unlocked</em></div><div class="achievement locked"><span>🏆</span><div><b>Study Champions</b><small>Reach 2,000 pair points</small></div><em>720 left</em></div></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast">Task added successfully ✨</div>
+  <div class="modal-backdrop" id="modal">
+    <div class="modal"><button class="close" id="closeModal">×</button><p class="eyebrow">NEW SHARED TASK</p><h2>Add a task</h2><input id="newTask" placeholder="e.g. Review biology notes"><div class="modal-actions"><button class="secondary" id="cancelModal">Cancel</button><button class="primary" id="saveTask">Create task</button></div></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
