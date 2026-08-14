@@ -73,9 +73,10 @@ const assignments = {
       title: "August 14, 2026 : Novel study",
       description: "Dear year one scholar, please read the novel from chapter 15 to chapter 26."
     }],
-  "How To Learn": [ {title: "August 15, 2026 : Recent assignment",
-     description: "Assignment: After_Wed_Class Assignment: Ask Better Questions in One Subject: Due tomorrow
-8:30 AM"}],
+  "How To Learn": [{
+    title: "August 15, 2026 : Recent assignment",
+    description: "Assignment: After_Wed_Class Assignment: Ask Better Questions in One Subject: Due tomorrow 8:30 AM"
+  }],
   "Language Lab": [],
   "Communication art": [],
   "Discipleship": [],
