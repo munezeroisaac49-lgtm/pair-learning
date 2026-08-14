@@ -42,7 +42,8 @@ const pairData = [
   { student: "Irine Gihozo", partner: "Totis Irakoze", cycle: "Current 3-day cycle" },
   { student: "Kedia Keza Isimbi", partner: "Bertin Ihirwe", cycle: "Current 3-day cycle" },
   { student: "Germaine Shema", partner: "Jean Yves T.", cycle: "Current 3-day cycle" },
-  { student: "Dieudonne Amani", partner: "Kheila Verra", cycle: "Current 3-day cycle" }
+  { student: "Dieudonne Amani", partner: "Kheila Verra", cycle: "Current 3-day cycle" },
+   { student: "Uwurukundo Jean Yves", partner: "Munezero Bertille", cycle: "Current 3-day cycle" }
 ];
 
 const unassignedStudents = ["Munezero Berithile"];
