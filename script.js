@@ -59,7 +59,16 @@ const subjects = [
 ];
 
 const assignments = {
-  "Writer's Workshop": [],
+  "Writer's Workshop": [
+    {
+      title: "Write an informative essay",
+      description: "Complete your first draft as soon as possible because assignments are increasing over time."
+    },
+    {
+      title: "Writing strong introduction ",
+      description: "Write a strong hook, background and thesis statement."
+    }
+  ],
   "Guided Reading": [],
   "How To Learn": [],
   "Language Lab": [],
