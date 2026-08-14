@@ -69,7 +69,10 @@ const assignments = {
       description: "Write a strong hook, background and thesis statement."
     }
   ],
-  "Guided Reading": [],
+  "Guided Reading": [{
+      title: "August 14, 2026 : Novel study",
+      description: "Dear year one scholar, please read the novel from chapter 15 to chapter 26."
+    }],
   "How To Learn": [],
   "Language Lab": [],
   "Communication art": [],
