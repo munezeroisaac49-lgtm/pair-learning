@@ -78,7 +78,29 @@ const assignments = {
     description: "Assignment: After_Wed_Class Assignment: Ask Better Questions in One Subject: Due tomorrow 8:30 AM"
   }],
   "Language Lab": [],
-  "Communication art": [],
+  "Communication art": [{
+    title: "August 15, 2026 : Announcement",
+    description: "Notification: ### A Heartbreaking Goodbye 💔
+
+**It is with extremely heavy hearts that we announce that our two lovely teachers, Nathan and Perfect, will be leaving our campus this Friday.**
+
+Some goodbyes are difficult to say, but this one feels almost impossible. 💔
+
+Nathan and Perfect have been more than just teachers. They have been people who encouraged us, guided us, listened to us, made us laugh, and made our campus feel like a better place. Their presence has touched so many students, and their absence will leave a space that will be incredibly difficult to fill.
+
+It hurts to know that after Friday, we will no longer see them walking through our campus, teaching in our classrooms, sharing their smiles, and being part of our everyday lives.
+
+**Nathan and Perfect, thank you for every lesson, every conversation, every laugh, every piece of advice, and every moment you gave us.** We may have to say goodbye, but we will never forget the impact you had on us.
+
+Friday won't just be another day on campus.
+**It will be the day we say goodbye to two people we wish we could keep forever.** 😭💔
+
+We love you. We appreciate you. And we will miss you more than words can ever explain.
+
+**Thank you for everything, Nathan and Perfect. ❤️
+You will always have a place in our campus family.**
+"
+  }],
   "Discipleship": [],
   "Mental health": []
 };
