@@ -295,15 +295,16 @@ function renderSubjectTasks(subject) {
     return;
   }
 
-  grid.innerHTML = items
-    .map(function (item) {
-      return `
-        <article class="task-card">
-          <h3>${escapeHtml(item.title || item)}</h3>
-        </article>
-      `;
-    })
-    .join("");
+ grid.innerHTML = items
+  .map(function (item) {
+    return `
+      <article class="task-card">
+        <h3>${escapeHtml(item.title || item)}</h3>
+        <p>${escapeHtml(item.description || "")}</p>
+      </article>
+    `;
+  })
+  .join("");
 }
 
 
