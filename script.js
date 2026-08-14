@@ -1,5 +1,5 @@
 /* Pairly — Student Workspace
-   New student pairs
+   Student Pairs, Assignments, Search, Navigation
 */
 
 const pairData = [
@@ -43,11 +43,14 @@ const pairData = [
   { student: "Kedia Keza Isimbi", partner: "Bertin Ihirwe", cycle: "Current 3-day cycle" },
   { student: "Germaine Shema", partner: "Jean Yves T.", cycle: "Current 3-day cycle" },
   { student: "Dieudonne Amani", partner: "Kheila Verra", cycle: "Current 3-day cycle" },
-   { student: "Uwurukundo Jean Yves", partner: "Munezero Bertille", cycle: "Current 3-day cycle" }
+  { student: "Uwurukundo Jean Yves", partner: "Munezero Bertille", cycle: "Current 3-day cycle" }
 ];
 
-const unassignedStudents = ["Munezero Berithile"];
+/* Students who currently do not have a partner */
+const unassignedStudents = [];
 
+
+/* Subjects */
 const subjects = [
   "Writer's Workshop",
   "Guided Reading",
@@ -58,29 +61,45 @@ const subjects = [
   "Mental health"
 ];
 
+
+/* Assignments */
 const assignments = {
   "Writer's Workshop": [
     {
       title: "Write an informative essay",
-      description: "Complete your first draft as soon as possible because assignments are increasing over time."
+      description:
+        "Complete your first draft as soon as possible because assignments are increasing over time."
     },
     {
-      title: "Writing strong introduction ",
-      description: "Write a strong hook, background and thesis statement."
+      title: "Writing strong introduction",
+      description:
+        "Write a strong hook, background and thesis statement."
     }
   ],
-  "Guided Reading": [{
+
+  "Guided Reading": [
+    {
       title: "August 14, 2026 : Novel study",
-      description: "Dear year one scholar, please read the novel from chapter 15 to chapter 26."
-    }],
-  "How To Learn": [{
-    title: "August 15, 2026 : Recent assignment",
-    description: "Assignment: After_Wed_Class Assignment: Ask Better Questions in One Subject: Due tomorrow 8:30 AM"
-  }],
+      description:
+        "Dear year one scholar, please read the novel from chapter 15 to chapter 26."
+    }
+  ],
+
+  "How To Learn": [
+    {
+      title: "August 15, 2026 : Recent assignment",
+      description:
+        "Assignment: After_Wed_Class Assignment: Ask Better Questions in One Subject: Due tomorrow 8:30 AM"
+    }
+  ],
+
   "Language Lab": [],
-  "Communication art": [{
-    title: "August 15, 2026 : Announcement",
-    description: "💔 A HEARTBREAKING GOODBYE 💔
+
+  "Communication art": [
+    {
+      title: "August 15, 2026 : Announcement",
+
+      description: `💔 A HEARTBREAKING GOODBYE 💔
 
 It is with extremely heavy hearts that we announce that our two lovely teachers, Nathan and Perfect, will be leaving our campus this Friday.
 
@@ -100,12 +119,19 @@ We love you. We appreciate you. And we will miss you more than words can ever ex
 
 Thank you for everything, Nathan and Perfect. ❤️
 
-You will always have a place in our campus family.
-`;
-  }],
+You will always have a place in our campus family.`
+    }
+  ],
+
   "Discipleship": [],
+
   "Mental health": []
 };
+
+
+/* ==========================================
+   START APPLICATION
+========================================== */
 
 document.addEventListener("DOMContentLoaded", function () {
   setupNavigation();
@@ -115,6 +141,10 @@ document.addEventListener("DOMContentLoaded", function () {
   setupMobileMenu();
 });
 
+
+/* ==========================================
+   NAVIGATION
+========================================== */
 
 function setupNavigation() {
   const navItems = document.querySelectorAll(".nav-item");
@@ -135,6 +165,10 @@ function setupNavigation() {
   });
 }
 
+
+/* ==========================================
+   PAIR TABLE
+========================================== */
 
 function renderPairTable() {
   const tbody = document.getElementById("pairTableBody");
@@ -161,6 +195,10 @@ function renderPairTable() {
   }
 }
 
+
+/* ==========================================
+   PAIR SEARCH
+========================================== */
 
 function setupPairSearch() {
   const input = document.getElementById("studentSearch");
@@ -213,7 +251,7 @@ function setupPairSearch() {
     showPairResult(
       searchedStudent,
       partner,
-      "Current 3-day cycle"
+      match.cycle
     );
   }
 
@@ -226,6 +264,10 @@ function setupPairSearch() {
   });
 }
 
+
+/* ==========================================
+   SHOW PAIR RESULT
+========================================== */
 
 function showPairResult(student, partner, detail) {
   const result = document.getElementById("pairResult");
@@ -244,6 +286,10 @@ function showPairResult(student, partner, detail) {
 }
 
 
+/* ==========================================
+   SEARCH PLACEHOLDER
+========================================== */
+
 function showPairPlaceholder() {
   const result = document.getElementById("pairResult");
 
@@ -253,11 +299,17 @@ function showPairPlaceholder() {
     <div class="result-placeholder">
       <div class="placeholder-icon">⌕</div>
       <h3>Your pair will appear here</h3>
-      <p>Search your name above to see your assigned learning partner.</p>
+      <p>
+        Search your name above to see your assigned learning partner.
+      </p>
     </div>
   `;
 }
 
+
+/* ==========================================
+   STUDENT NOT FOUND
+========================================== */
 
 function showPairNotFound() {
   const result = document.getElementById("pairResult");
@@ -274,6 +326,10 @@ function showPairNotFound() {
 }
 
 
+/* ==========================================
+   SUBJECT TABS & TASKS
+========================================== */
+
 function renderTasks() {
   const tabs = document.getElementById("subjectTabs");
   const grid = document.getElementById("taskGrid");
@@ -288,6 +344,7 @@ function renderTasks() {
     button.className =
       "subject-tab" + (index === 0 ? " active" : "");
 
+    button.type = "button";
     button.textContent = subject;
 
     button.addEventListener("click", function () {
@@ -307,6 +364,10 @@ function renderTasks() {
 }
 
 
+/* ==========================================
+   RENDER SUBJECT TASKS
+========================================== */
+
 function renderSubjectTasks(subject) {
   const grid = document.getElementById("taskGrid");
 
@@ -318,25 +379,31 @@ function renderSubjectTasks(subject) {
     grid.innerHTML = `
       <div class="result-placeholder">
         <h3>No assignments added yet</h3>
-        <p>Assignments for ${escapeHtml(subject)} can be added in script.js.</p>
+        <p>
+          Assignments for ${escapeHtml(subject)} can be added in script.js.
+        </p>
       </div>
     `;
 
     return;
   }
 
- grid.innerHTML = items
-  .map(function (item) {
-    return `
-      <article class="task-card">
-        <h3>${escapeHtml(item.title || item)}</h3>
-        <p>${escapeHtml(item.description || "")}</p>
-      </article>
-    `;
-  })
-  .join("");
+  grid.innerHTML = items
+    .map(function (item) {
+      return `
+        <article class="task-card">
+          <h3>${escapeHtml(item.title || item)}</h3>
+          <p>${escapeHtml(item.description || "")}</p>
+        </article>
+      `;
+    })
+    .join("");
 }
 
+
+/* ==========================================
+   MOBILE MENU
+========================================== */
 
 function setupMobileMenu() {
   const button = document.getElementById("mobileMenu");
@@ -349,6 +416,10 @@ function setupMobileMenu() {
   });
 }
 
+
+/* ==========================================
+   HTML SECURITY / ESCAPING
+========================================== */
 
 function escapeHtml(value) {
   return String(value)
