@@ -185,3 +185,43 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+// ========================================
+// TASK CLASS BUTTONS
+// ========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const classButtons = document.querySelectorAll(".class-button");
+    const classContents = document.querySelectorAll(".class-content");
+
+    classButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const selectedClass = button.getAttribute("data-class");
+
+            // Hide all class contents
+            classContents.forEach(function (content) {
+                content.classList.remove("active");
+            });
+
+            // Remove active from all buttons
+            classButtons.forEach(function (btn) {
+                btn.classList.remove("active");
+            });
+
+            // Show the selected class
+            const selectedContent = document.getElementById(selectedClass);
+
+            if (selectedContent) {
+                selectedContent.classList.add("active");
+            }
+
+            // Highlight selected button
+            button.classList.add("active");
+
+        });
+
+    });
+
+});
