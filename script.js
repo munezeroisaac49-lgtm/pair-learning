@@ -40,9 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
     ["Irine Gihozo", "Kedia Keza Isimbi"],
     ["Totis Irakoze", "Bertin Ihirwe"],
     ["Germaine Shema", "Dieudonne Amani"],
-    ["Jean Yves T.", "Kheila Verra"],
-    ["Uwurukundo Jean Yves", "Flora Uwamariya"],
-    ["Munezero Bertille", "Jean Yves T."]
+    ["Flora Uwamariya", "Kheila Verra"],
+    ["Munezero Bertille", "Uwurukundo Jean Yves"]
 ];
 
   /* PAGE NAVIGATION */
