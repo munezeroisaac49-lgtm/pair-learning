@@ -8,6 +8,7 @@ const showSignup    = document.getElementById("showSignup");
 const showLogin     = document.getElementById("showLogin");
 const authError     = document.getElementById("authError");
 const logoutBtn     = document.getElementById("logoutBtn");
+const greeting      = document.getElementById("greeting");
 
 // ---- Toggle between login/signup forms ----
 showSignup.addEventListener("click", (e) => {
@@ -27,7 +28,8 @@ showLogin.addEventListener("click", (e) => {
 // ---- Sign up ----
 signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const name = document.getElementById("signupName").value.trim();
+  const firstName = document.getElementById("signupFirstName").value.trim();
+  const secondName = document.getElementById("signupSecondName").value.trim();
   const email = document.getElementById("signupEmail").value.trim();
   const password = document.getElementById("signupPassword").value;
 
@@ -35,7 +37,8 @@ signupForm.addEventListener("submit", async (e) => {
     const cred = await auth.createUserWithEmailAndPassword(email, password);
     // Save a student profile document keyed by their uid
     await db.collection("students").doc(cred.user.uid).set({
-      name: name,
+      firstName: firstName,
+      secondName: secondName,
       email: email,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
@@ -60,14 +63,24 @@ loginForm.addEventListener("submit", async (e) => {
 // ---- Log out ----
 logoutBtn.addEventListener("click", () => auth.signOut());
 
-// ---- Show dashboard only when logged in ----
-auth.onAuthStateChanged((user) => {
+// ---- Show dashboard only when logged in, and greet the student ----
+auth.onAuthStateChanged(async (user) => {
   if (user) {
     authScreen.classList.add("hidden");
     appShell.classList.remove("hidden");
+
+    try {
+      const doc = await db.collection("students").doc(user.uid).get();
+      if (doc.exists) {
+        const data = doc.data();
+        greeting.textContent = "Welcome, " + (data.secondName || data.name || "");
+      }
+    } catch (err) {
+      console.error("Could not load student profile:", err);
+    }
   } else {
     authScreen.classList.remove("hidden");
     appShell.classList.add("hidden");
+    greeting.textContent = "";
   }
 });
-
