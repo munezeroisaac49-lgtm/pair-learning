@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ["Flora Uwamariya", "Marius Kigwira"],
     ["Irine Gihozo", "Kedia Keza Isimbi"],
     ["Totis Irakoze", "Bertin Ihirwe"],
-    ["Germaine Shema", "Dieudonne Amani"],
+    ["Germaine Rugwiro Shema", "Dieudonne Amani"],
     ["Flora Uwamariya", "Kheila Verra"],
     ["Munezero Bertille", "Uwurukundo Jean Yves"]
 ];
