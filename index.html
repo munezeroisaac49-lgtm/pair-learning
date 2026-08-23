@@ -49,6 +49,7 @@
     .auth-card p { font-size: 14px; margin-top: 12px; text-align: center; }
     .auth-card a { color: #4f7cff; cursor: pointer; }
     #authError { color: #ff6b6b; font-size: 13px; min-height: 18px; }
+    #greeting { font-weight: 600; }
     #logoutBtn {
       margin-top: 12px;
       width: 100%;
@@ -78,7 +79,8 @@
 
       <form id="signupForm" class="hidden">
         <h2>Sign up</h2>
-        <input id="signupName" type="text" placeholder="Full name" required>
+        <input id="signupFirstName" type="text" placeholder="First name" required>
+        <input id="signupSecondName" type="text" placeholder="Second name" required>
         <input id="signupEmail" type="email" placeholder="Email" required>
         <input id="signupPassword" type="password" placeholder="Password" required>
         <button type="submit">Create account</button>
@@ -128,6 +130,7 @@
       <header class="topbar">
         <button id="mobileMenu" class="mobile-menu" type="button">☰</button>
         <div class="top-title">Student Workspace</div>
+        <div id="greeting"></div>
         <div class="days-pill">3-day pair cycle</div>
       </header>
 
