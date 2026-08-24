@@ -542,14 +542,14 @@
     }
 
     /* ─── CHAT PAGE ─────────────────────────────────────────────── */
-    #chat {
+    .page#chat {
       display: none;
       flex-direction: column;
       height: 100%;
       padding: 0;
       overflow: hidden;
     }
-    #chat.active {
+    .page#chat.active {
       display: flex;
     }
 
@@ -1142,8 +1142,9 @@
        { firstName, secondName, email, uid }
   ════════════════════════════════════════════════════════════════ */
 
-  const db   = firebase.firestore();
-  const auth = firebase.auth();
+  const firebaseReady = typeof firebase !== 'undefined';
+  const db   = firebaseReady ? firebase.firestore() : null;
+  const auth = firebaseReady ? firebase.auth() : null;
 
   // ── State ──────────────────────────────────────────────────────
   let currentUser      = null;
@@ -1154,19 +1155,23 @@
   let lastMessageCount = 0;
 
   // ── Auth state ─────────────────────────────────────────────────
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      currentUser = user;
-      await loadUserData(user.uid);
-      showApp();
-      initChat();
-    } else {
-      currentUser    = null;
-      currentUserData = null;
-      hideApp();
-      if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; }
-    }
-  });
+  if (auth) {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        currentUser = user;
+        await loadUserData(user.uid);
+        showApp();
+        initChat();
+      } else {
+        currentUser = null;
+        currentUserData = null;
+        hideApp();
+        if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; }
+      }
+    });
+  } else {
+    showApp();
+  }
 
   async function loadUserData(uid) {
     try {
@@ -1243,6 +1248,7 @@
     const errEl    = document.getElementById('authError');
     errEl.textContent = '';
     try {
+      if (!auth) throw new Error('Firebase is not connected. Check firebase-config.js.');
       await auth.signInWithEmailAndPassword(email, password);
     } catch (err) {
       errEl.textContent = err.message;
@@ -1258,6 +1264,7 @@
     const errEl      = document.getElementById('authError');
     errEl.textContent = '';
     try {
+      if (!auth) throw new Error('Firebase is not connected. Check firebase-config.js.');
       const cred = await auth.createUserWithEmailAndPassword(email, password);
       // Save profile to Firestore
       await db.collection('users').doc(cred.user.uid).set({
@@ -1273,7 +1280,7 @@
   });
 
   document.getElementById('logoutBtn').addEventListener('click', () => {
-    auth.signOut();
+    if (auth) auth.signOut();
   });
 
   // ── Navigation ─────────────────────────────────────────────────
@@ -1321,6 +1328,8 @@
       if (content) content.classList.add('active');
     });
   });
+  const firstClassButton = document.querySelector('.class-button');
+  if (firstClassButton) firstClassButton.click();
 
   // ── Pair search ────────────────────────────────────────────────
   document.getElementById('searchStudent').addEventListener('click', searchPair);
@@ -1328,64 +1337,28 @@
     if (e.key === 'Enter') searchPair();
   });
 
+  function normalizeName(value) {
+    return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
   function searchPair() {
-    const query = document.getElementById('studentSearch').value.trim().toLowerCase();
+    const input = document.getElementById('studentSearch');
     const result = document.getElementById('pairResult');
-    const table  = document.getElementById('pairTable');
-
-    if (!query) return;
-
-    const rows = table.querySelectorAll('tbody tr');
-    let found = null;
-
+    const table = document.getElementById('pairTable');
+    const query = normalizeName(input.value);
     table.classList.remove('highlighted');
-    rows.forEach(r => r.classList.remove('match'));
-
-    rows.forEach(row => {
-      const s1 = row.cells[1]?.textContent.toLowerCase() || '';
-      const s2 = row.cells[2]?.textContent.toLowerCase() || '';
-      if (s1.includes(query) || s2.includes(query)) {
-        if (!found) found = { student: row.cells[1].textContent, partner: row.cells[2].textContent };
-        row.classList.add('match');
-      }
-    });
-
-    if (found) {
-      table.classList.add('highlighted');
-      const i1 = found.student.trim()[0] || '?';
-      const i2 = found.partner.trim()[0] || '?';
-      result.innerHTML =
-        '<div class="pair-found">' +
-          '<div class="pair-person">' +
-            '<div class="avatar">' + i1.toUpperCase() + '</div>' +
-            '<strong>' + found.student + '</strong>' +
-            '<span>Student</span>' +
-          '</div>' +
-          '<div class="pair-connector">' +
-            '<svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 12h8"/><path d="M12 8l4 4-4 4"/></svg>' +
-            '<span>paired with</span>' +
-          '</div>' +
-          '<div class="pair-person">' +
-            '<div class="avatar" style="background: linear-gradient(135deg, #34d399, #059669)">' + i2.toUpperCase() + '</div>' +
-            '<strong>' + found.partner + '</strong>' +
-            '<span>Learning Partner</span>' +
-          '</div>' +
-        '</div>';
-      // Scroll table row into view
-      const matchRow = table.querySelector('tbody tr.match');
-      if (matchRow) matchRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-      result.innerHTML =
-        '<div class="result-placeholder">' +
-          '<div class="placeholder-icon"><svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" opacity="0.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>' +
-          '<h3>No match found</h3>' +
-          '<p>Try searching with a different spelling.</p>' +
-        '</div>';
-    }
+    table.querySelectorAll('tbody tr').forEach(row => row.classList.remove('match'));
+    if (!query) { result.innerHTML = '<div class="result-placeholder"><div class="placeholder-icon">🔎</div><h3>Enter a student name</h3><p>Type a first name, last name, or full name.</p></div>'; input.focus(); return; }
+    const matches = Array.from(table.querySelectorAll('tbody tr')).filter(row => { const a=normalizeName(row.cells[1]?.textContent), b=normalizeName(row.cells[2]?.textContent); const m=a.includes(query)||b.includes(query); if(m) row.classList.add('match'); return m; });
+    if (!matches.length) { result.innerHTML='<div class="result-placeholder"><div class="placeholder-icon">🔎</div><h3>No student found</h3><p>Try the first name, last name, or a different spelling.</p></div>'; return; }
+    table.classList.add('highlighted');
+    result.innerHTML='<div style="width:100%">'+matches.map(row => { const student=row.cells[1].textContent.trim(), partner=row.cells[2].textContent.trim(); return '<div class="pair-found" style="margin-bottom:12px"><div class="pair-person"><div class="avatar">'+escHtml(student[0]||'?')+'</div><strong>'+escHtml(student)+'</strong><span>Student</span></div><div class="pair-connector"><span>paired with</span> →</div><div class="pair-person"><div class="avatar">'+escHtml(partner[0]||'?')+'</div><strong>'+escHtml(partner)+'</strong><span>Learning Partner</span></div></div>'; }).join('')+'</div>';
+    matches[0].scrollIntoView({behavior:'smooth',block:'center'});
   }
 
   // ── Chat ───────────────────────────────────────────────────────
   function initChat() {
+    if (!db) return;
     if (chatUnsubscribe) return;
 
     chatUnsubscribe = db.collection('messages')
