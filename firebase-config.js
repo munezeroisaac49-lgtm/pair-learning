@@ -1,6 +1,3 @@
-// Paste the config object Firebase gave you when you registered your web app.
-// Firebase Console → Project settings → General → Your apps → Web app → Config
-
 const firebaseConfig = {
   apiKey: "AIzaSyD1Cm7zDzSjuc1NoeZyXnJ83SVT7w2_dfA",
   authDomain: "pairly-adddf.firebaseapp.com",
@@ -14,4 +11,3 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
-
