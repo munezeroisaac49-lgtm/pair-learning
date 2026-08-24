@@ -12,12 +12,12 @@
   // ------------------------------------------------------------
 
   const pairData = [
-    { student: "Frank Gentil", partner: "Van Joyce" },
+    { student: "Frank Gentil", partner: "Sophie Tumukunde" },
     { student: "Thierry Ndinimana", partner: "Herve" },
     { student: "Kevin Irumva", partner: "Chloe Agasaro" },
     { student: "Daella Erica", partner: "Max Dalvin" },
     { student: "Cedrick Sugira", partner: "Jeanne Uwayisaba" },
-    { student: "Emery Baziga", partner: "Sophie Tumukunde" },
+    { student: "Emery Baziga", partner: "Van Joyce" },
     { student: "Dernick Hirwa", partner: "Hope Mary" },
     { student: "Adjira Kabera", partner: "Marianne Dukuzimana" },
     { student: "Kelvin Ibyimanikora", partner: "Ratifa Iragena" },
