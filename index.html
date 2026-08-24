@@ -5,86 +5,762 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pairly — Student Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
 
   <style>
+    /* ─── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0c0c0f;
+      --surface:  #13131a;
+      --surface2: #1a1a24;
+      --border:   #ffffff12;
+      --border2:  #ffffff1e;
+      --accent:   #6c63ff;
+      --accent2:  #a78bfa;
+      --text:     #f0f0f5;
+      --muted:    #8888a0;
+      --success:  #34d399;
+      --danger:   #f87171;
+      --radius:   12px;
+      --font:     'DM Sans', sans-serif;
+    }
+
+    html, body { height: 100%; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow: hidden;
+    }
+
     .hidden { display: none !important; }
 
+    /* ─── AUTH SCREEN ───────────────────────────────────────────── */
     #authScreen {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #0e0e10;
-      color: #fff;
-      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
     }
+    #authScreen::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #6c63ff22 0%, transparent 70%);
+      top: -100px; left: -100px;
+      pointer-events: none;
+    }
+    #authScreen::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, #a78bfa18 0%, transparent 70%);
+      bottom: -50px; right: -50px;
+      pointer-events: none;
+    }
+
     .auth-card {
-      width: 320px;
-      background: #1a1a1d;
-      border-radius: 12px;
-      padding: 28px;
+      width: 360px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 20px;
+      padding: 36px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 24px 64px #00000060;
     }
-    .auth-card h2 { margin: 0 0 16px; }
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .auth-logo-mark {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 18px; color: #fff;
+    }
+    .auth-logo strong {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      letter-spacing: -0.3px;
+    }
+    .auth-logo span { font-size: 12px; color: var(--muted); display: block; }
+    .auth-card h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      margin-bottom: 6px;
+      letter-spacing: -0.4px;
+    }
+    .auth-card .auth-sub { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
     .auth-card input {
       width: 100%;
-      padding: 10px;
+      padding: 11px 14px;
       margin-bottom: 10px;
-      border-radius: 6px;
-      border: 1px solid #333;
-      background: #0e0e10;
-      color: #fff;
-      box-sizing: border-box;
+      border-radius: 9px;
+      border: 1px solid var(--border2);
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 14px;
+      transition: border-color 0.2s;
+      outline: none;
     }
+    .auth-card input:focus { border-color: var(--accent); }
+    .auth-card input::placeholder { color: var(--muted); }
+    .name-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .auth-card button[type="submit"] {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      background: #4f7cff;
-      color: #fff;
-      cursor: pointer;
-      font-weight: 600;
+      width: 100%; padding: 12px;
+      border: none; border-radius: 9px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; cursor: pointer;
+      font-weight: 600; font-size: 14px;
+      font-family: var(--font);
+      transition: opacity 0.2s, transform 0.15s;
     }
-    .auth-card p { font-size: 14px; margin-top: 12px; text-align: center; }
-    .auth-card a { color: #4f7cff; cursor: pointer; }
-    #authError { color: #ff6b6b; font-size: 13px; min-height: 18px; }
-    #greeting { font-weight: 600; }
-    #logoutBtn {
-      margin-top: 12px;
-      width: 100%;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #444;
-      background: transparent;
+    .auth-card button[type="submit"]:hover { opacity: 0.92; transform: translateY(-1px); }
+    .auth-card p.switch { font-size: 13px; margin-top: 14px; text-align: center; color: var(--muted); }
+    .auth-card a { color: var(--accent2); cursor: pointer; text-decoration: none; font-weight: 500; }
+    #authError {
+      color: var(--danger); font-size: 12px;
+      min-height: 16px; margin-top: 8px;
+      text-align: center;
+    }
+
+    /* ─── APP SHELL ─────────────────────────────────────────────── */
+    .app-shell {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ─── SIDEBAR ───────────────────────────────────────────────── */
+    .sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding: 20px 14px;
+      gap: 6px;
+      overflow-y: auto;
+      transition: transform 0.3s;
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 8px 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    .brand-mark {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px; color: #fff;
+      flex-shrink: 0;
+    }
+    .brand strong {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px; display: block;
+      letter-spacing: -0.3px;
+    }
+    .brand span { font-size: 11px; color: var(--muted); }
+
+    .nav-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      color: var(--muted);
+      padding: 12px 10px 4px;
+      text-transform: uppercase;
+    }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      width: 100%; padding: 9px 12px;
+      border-radius: 9px; border: none;
+      background: transparent; color: var(--muted);
+      font-family: var(--font); font-size: 14px; font-weight: 500;
+      cursor: pointer; text-align: left;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-item svg { flex-shrink: 0; opacity: 0.7; }
+    .nav-item:hover { background: var(--surface2); color: var(--text); }
+    .nav-item.active {
+      background: linear-gradient(135deg, #6c63ff1a, #a78bfa0d);
+      color: var(--accent2);
+      border: 1px solid #6c63ff28;
+    }
+    .nav-item.active svg { opacity: 1; }
+
+    /* Chat badge */
+    .nav-badge {
+      margin-left: auto;
+      background: var(--accent);
       color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      min-width: 18px;
+      text-align: center;
+      display: none;
+    }
+    .nav-badge.show { display: block; }
+
+    .sidebar-spacer { flex: 1; }
+
+    /* Sidebar user widget */
+    .sidebar-user {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      margin-top: 4px;
+    }
+    .sidebar-user-card {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px;
+      border-radius: 10px;
       cursor: pointer;
+      transition: background 0.15s;
+    }
+    .sidebar-user-card:hover { background: var(--surface2); }
+    .user-avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 14px; color: #fff;
+      flex-shrink: 0;
+    }
+    .user-avatar-lg {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 28px; color: #fff;
+      flex-shrink: 0;
+    }
+    .sidebar-user-info strong { font-size: 13px; display: block; font-weight: 600; }
+    .sidebar-user-info span { font-size: 11px; color: var(--muted); }
+
+    #logoutBtn {
+      width: 100%; margin-top: 6px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border2);
+      background: transparent; color: var(--muted);
+      font-family: var(--font); font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    #logoutBtn:hover { background: #f8717120; color: var(--danger); border-color: var(--danger); }
+
+    /* ─── MAIN AREA ─────────────────────────────────────────────── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* Topbar */
+    .topbar {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 28px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      flex-shrink: 0;
+    }
+    .mobile-menu {
+      display: none;
+      background: none; border: none; color: var(--text);
+      font-size: 20px; cursor: pointer; padding: 4px;
+    }
+    .top-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 17px; letter-spacing: -0.3px;
+    }
+    #greeting {
+      font-size: 13px; color: var(--muted);
+      margin-left: auto;
+    }
+    #greeting strong { color: var(--text); }
+    .days-pill {
+      background: linear-gradient(135deg, #6c63ff22, #a78bfa14);
+      border: 1px solid #6c63ff30;
+      color: var(--accent2);
+      font-size: 11px; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Pages */
+    .page { display: none; flex: 1; overflow-y: auto; padding: 32px 28px 48px; }
+    .page.active { display: block; }
+
+    /* Section headings */
+    .eyebrow {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1.5px; color: var(--accent2);
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .section-title { margin-bottom: 28px; }
+    .section-title h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px; letter-spacing: -0.8px;
+      margin-bottom: 8px;
+    }
+    .muted { color: var(--muted); font-size: 14px; }
+
+    /* Pair search card */
+    .pair-search-card {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .pair-search-card h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px; margin: 8px 0 6px;
+    }
+    .search-row {
+      display: flex; gap: 10px; margin-top: 14px;
+    }
+    .search-row input {
+      flex: 1; padding: 10px 14px;
+      border-radius: 9px; border: 1px solid var(--border2);
+      background: var(--bg); color: var(--text);
+      font-family: var(--font); font-size: 14px; outline: none;
+    }
+    .search-row input:focus { border-color: var(--accent); }
+    .search-row input::placeholder { color: var(--muted); }
+    button.primary {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none; border-radius: 9px;
+      color: #fff; font-family: var(--font);
+      font-weight: 600; font-size: 14px;
+      cursor: pointer; white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+    button.primary:hover { opacity: 0.88; }
+
+    /* Pair result */
+    .pair-result {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      min-height: 100px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 28px;
+      padding: 24px;
+    }
+    .result-placeholder { text-align: center; color: var(--muted); }
+    .placeholder-icon { font-size: 32px; margin-bottom: 8px; }
+    .result-placeholder h3 { font-size: 16px; color: var(--text); margin-bottom: 4px; }
+
+    .pair-found {
+      display: flex; align-items: center; gap: 20px;
+      width: 100%; justify-content: center; flex-wrap: wrap;
+    }
+    .pair-person {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 12px; padding: 16px 24px;
+      text-align: center; min-width: 140px;
+    }
+    .pair-person .avatar {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 18px; color: #fff;
+      margin: 0 auto 10px;
+    }
+    .pair-person strong { font-size: 14px; display: block; }
+    .pair-person span { font-size: 12px; color: var(--muted); }
+    .pair-connector {
+      font-size: 22px; color: var(--accent2);
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .pair-connector span { font-size: 11px; color: var(--muted); }
+
+    /* Pair table */
+    .pair-table-section { margin-top: 8px; }
+    .section-heading-row {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .section-heading-row h2 {
+      font-family: 'DM Serif Display', serif; font-size: 22px;
+    }
+    .assignment-count {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--muted); font-size: 12px;
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+    .pair-table { width: 100%; border-collapse: collapse; }
+    .pair-table th {
+      background: var(--surface);
+      padding: 12px 16px; text-align: left;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); border-bottom: 1px solid var(--border);
+    }
+    .pair-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .pair-table tbody tr:last-child td { border-bottom: none; }
+    .pair-table tbody tr:hover { background: var(--surface); }
+    .pair-table td:first-child { color: var(--muted); font-size: 12px; width: 40px; }
+    .pair-table.highlighted tr.match { background: #6c63ff18; }
+    .pair-table.highlighted tr.match td { color: var(--text); }
+
+    /* Tasks page */
+    .class-buttons {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 28px;
+    }
+    .class-button {
+      padding: 9px 18px;
+      border-radius: 9px;
+      border: 1px solid var(--border2);
+      background: var(--surface);
+      color: var(--muted);
+      font-family: var(--font); font-size: 13px; font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .class-button:hover { background: var(--surface2); color: var(--text); }
+    .class-button.active {
+      background: linear-gradient(135deg, #6c63ff1a, #a78bfa0d);
+      color: var(--accent2); border-color: #6c63ff30;
+    }
+    .class-content { display: none; }
+    .class-content.active { display: block; }
+    .task-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px; margin-bottom: 18px;
+    }
+    .task-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+    .task-card {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .task-card:hover { border-color: #6c63ff40; transform: translateY(-2px); }
+    .task-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .task-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .task-card p + p { margin-top: 8px; }
+
+    /* ─── PROFILE PAGE ───────────────────────────────────────────── */
+    .profile-hero {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex; align-items: center; gap: 24px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-hero::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #6c63ff18, transparent 70%);
+      top: -100px; right: -50px;
+      pointer-events: none;
+    }
+    .profile-hero-info h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px; letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+    .profile-hero-info .profile-email {
+      font-size: 13px; color: var(--muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .profile-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #34d39915; border: 1px solid #34d39930;
+      color: var(--success);
+      font-size: 11px; font-weight: 600;
+      padding: 3px 10px; border-radius: 20px;
+      margin-top: 8px;
+    }
+    .profile-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+    }
+
+    .profile-cards {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px; margin-bottom: 24px;
+    }
+    .profile-info-card {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+    }
+    .profile-info-card .pic-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 6px;
+    }
+    .profile-info-card .pic-value {
+      font-size: 16px; font-weight: 600; color: var(--text);
+    }
+    .profile-info-card .pic-sub {
+      font-size: 12px; color: var(--muted); margin-top: 2px;
+    }
+
+    /* ─── CHAT PAGE ─────────────────────────────────────────────── */
+    #chat {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      padding: 0;
+      overflow: hidden;
+    }
+    #chat.active {
+      display: flex;
+    }
+
+    .chat-header {
+      padding: 20px 28px 16px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .chat-header .eyebrow { margin-bottom: 2px; }
+    .chat-header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px; letter-spacing: -0.4px;
+      margin-bottom: 2px;
+    }
+    .chat-header p { font-size: 13px; color: var(--muted); }
+    .chat-online-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      scroll-behavior: smooth;
+    }
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-track { background: transparent; }
+    .chat-messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    .chat-day-divider {
+      text-align: center;
+      margin: 12px 0;
+      position: relative;
+    }
+    .chat-day-divider::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 50%;
+      height: 1px; background: var(--border);
+    }
+    .chat-day-divider span {
+      background: var(--bg);
+      padding: 0 12px;
+      font-size: 11px; color: var(--muted);
+      font-weight: 500;
+      position: relative; z-index: 1;
+    }
+
+    .chat-msg {
+      display: flex;
+      gap: 10px;
+      padding: 3px 0;
+      align-items: flex-end;
+    }
+    .chat-msg.mine {
+      flex-direction: row-reverse;
+    }
+    .chat-msg-avatar {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 12px; color: #fff;
+      flex-shrink: 0;
+      margin-bottom: 2px;
+    }
+    .chat-msg-avatar.hidden-av { visibility: hidden; }
+
+    .chat-msg-body { max-width: 60%; }
+    .chat-msg.mine .chat-msg-body { align-items: flex-end; }
+
+    .chat-msg-meta {
+      font-size: 11px; color: var(--muted);
+      margin-bottom: 3px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .chat-msg.mine .chat-msg-meta { flex-direction: row-reverse; }
+    .chat-msg-name { font-weight: 600; color: var(--text); }
+
+    .chat-bubble {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 14px 14px 14px 4px;
+      padding: 10px 14px;
+      font-size: 14px; line-height: 1.5;
+      word-break: break-word;
+      display: inline-block;
+    }
+    .chat-msg.mine .chat-bubble {
+      background: linear-gradient(135deg, #6c63ff, #a78bfa);
+      border: none;
+      border-radius: 14px 14px 4px 14px;
+      color: #fff;
+    }
+
+    .chat-input-area {
+      padding: 16px 28px 20px;
+      border-top: 1px solid var(--border);
+      display: flex; gap: 10px; align-items: flex-end;
+      flex-shrink: 0;
+    }
+    #chatInput {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 11px 16px;
+      color: var(--text);
+      font-family: var(--font); font-size: 14px;
+      resize: none; outline: none;
+      max-height: 120px; min-height: 44px;
+      line-height: 1.5;
+      transition: border-color 0.2s;
+    }
+    #chatInput:focus { border-color: var(--accent); }
+    #chatInput::placeholder { color: var(--muted); }
+    #chatSend {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    #chatSend:hover { opacity: 0.88; transform: scale(1.05); }
+    #chatSend svg { color: #fff; }
+
+    .chat-empty {
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: var(--muted); text-align: center; gap: 10px;
+    }
+    .chat-empty-icon {
+      width: 56px; height: 56px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 4px;
+    }
+
+    /* Sidebar note */
+    .sidebar-note {
+      background: linear-gradient(135deg, #6c63ff12, #a78bfa08);
+      border: 1px solid #6c63ff22;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 12px; color: var(--muted);
+      margin-top: 6px;
+    }
+    .sidebar-note strong { color: var(--text); display: block; margin-bottom: 3px; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed; left: 0; top: 0; bottom: 0;
+        z-index: 100; transform: translateX(-100%);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .mobile-menu { display: block; }
+      .topbar { padding: 12px 16px; }
+      .page { padding: 24px 16px 48px; }
+      .chat-messages { padding: 16px; }
+      .chat-input-area { padding: 12px 16px 16px; }
+      .chat-header { padding: 16px; }
+      .profile-hero { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- LOGIN / SIGNUP SCREEN -->
+  <!-- AUTH SCREEN -->
   <div id="authScreen">
     <div class="auth-card">
+      <div class="auth-logo">
+        <div class="auth-logo-mark">P</div>
+        <div>
+          <strong>Pairly</strong>
+          <span>Student Workspace</span>
+        </div>
+      </div>
 
       <form id="loginForm">
-        <h2>Log in</h2>
-        <input id="loginEmail" type="email" placeholder="Email" required>
+        <h2>Welcome back</h2>
+        <p class="auth-sub">Sign in to your student account</p>
+        <input id="loginEmail" type="email" placeholder="Email address" required>
         <input id="loginPassword" type="password" placeholder="Password" required>
-        <button type="submit">Log in</button>
-        <p>No account? <a id="showSignup">Sign up</a></p>
+        <button type="submit">Sign in</button>
+        <p class="switch">No account? <a id="showSignup">Create one</a></p>
       </form>
 
       <form id="signupForm" class="hidden">
-        <h2>Sign up</h2>
-        <input id="signupFirstName" type="text" placeholder="First name" required>
-        <input id="signupSecondName" type="text" placeholder="Second name" required>
-        <input id="signupEmail" type="email" placeholder="Email" required>
-        <input id="signupPassword" type="password" placeholder="Password" required>
+        <h2>Join Pairly</h2>
+        <p class="auth-sub">Create your student account</p>
+        <div class="name-row">
+          <input id="signupFirstName" type="text" placeholder="First name" required>
+          <input id="signupSecondName" type="text" placeholder="Last name" required>
+        </div>
+        <input id="signupEmail" type="email" placeholder="Email address" required>
+        <input id="signupPassword" type="password" placeholder="Password (min 6 chars)" required>
         <button type="submit">Create account</button>
-        <p>Already have an account? <a id="showLogin">Log in</a></p>
+        <p class="switch">Already have an account? <a id="showLogin">Sign in</a></p>
       </form>
 
       <p id="authError"></p>
@@ -92,9 +768,10 @@
   </div>
 
 
+  <!-- APP SHELL -->
   <div class="app-shell hidden">
 
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
 
       <div class="brand">
         <div class="brand-mark">P</div>
@@ -104,23 +781,48 @@
         </div>
       </div>
 
+      <p class="nav-section-label">Navigation</p>
+
       <nav class="nav">
         <button class="nav-item active" data-page="pairs" type="button">
-          ♧ Pairs
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg>
+          Pairs
         </button>
 
         <button class="nav-item" data-page="tasks" type="button">
-          ✓ Tasks
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Tasks
+        </button>
+
+        <button class="nav-item" data-page="chat" type="button">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Class Chat
+          <span class="nav-badge" id="chatBadge">0</span>
+        </button>
+
+        <button class="nav-item" data-page="profile" type="button">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          My Profile
         </button>
       </nav>
 
       <div class="sidebar-note">
-        🤝
         <strong>3-day pair cycle</strong>
-        <p>Find your partner and help each other learn.</p>
+        Find your partner and help each other learn.
       </div>
 
-      <button id="logoutBtn" type="button">Log out</button>
+      <div class="sidebar-spacer"></div>
+
+      <div class="sidebar-user">
+        <div class="sidebar-user-card" id="sidebarUserCard" data-page="profile">
+          <div class="user-avatar" id="sidebarAvatar">?</div>
+          <div class="sidebar-user-info">
+            <strong id="sidebarName">Student</strong>
+            <span id="sidebarEmail">...</span>
+          </div>
+        </div>
+        <button id="logoutBtn" type="button">Sign out</button>
+      </div>
 
     </aside>
 
@@ -128,7 +830,9 @@
     <main class="main">
 
       <header class="topbar">
-        <button id="mobileMenu" class="mobile-menu" type="button">☰</button>
+        <button id="mobileMenu" class="mobile-menu" type="button">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
         <div class="top-title">Student Workspace</div>
         <div id="greeting"></div>
         <div class="days-pill">3-day pair cycle</div>
@@ -141,73 +845,40 @@
         <div class="section-title">
           <p class="eyebrow">STUDENT PAIRS</p>
           <h1>Find Your Pair</h1>
-          <p class="muted">
-            Search your name to find your learning partner.
-          </p>
+          <p class="muted">Search your name to find your learning partner for this cycle.</p>
         </div>
-
 
         <div class="pair-search-card">
-
           <p class="eyebrow">PAIR SEARCH</p>
-
           <h2>Who is your learning partner?</h2>
-
-          <p class="muted">
-            Enter your name below.
-          </p>
-
+          <p class="muted">Enter your first or last name below.</p>
           <div class="search-row">
-
-            <input
-              id="studentSearch"
-              type="search"
-              placeholder="Search your name..."
-              autocomplete="off"
-            >
-
-            <button
-              id="searchStudent"
-              class="primary"
-              type="button"
-            >
-              Find my pair
-            </button>
-
+            <input id="studentSearch" type="search" placeholder="Search your name..." autocomplete="off">
+            <button id="searchStudent" class="primary" type="button">Find my pair</button>
           </div>
-
         </div>
 
-
         <div class="pair-result" id="pairResult">
-
           <div class="result-placeholder">
-            <div class="placeholder-icon">⌕</div>
+            <div class="placeholder-icon">
+              <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" opacity="0.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
             <h3>Your pair will appear here</h3>
             <p>Search your name above.</p>
           </div>
-
         </div>
 
-
         <div class="pair-table-section">
-
           <div class="section-heading-row">
-
             <div>
               <p class="eyebrow">PAIR DIRECTORY</p>
               <h2>Current pairs</h2>
             </div>
-
             <span class="assignment-count">41 pairs</span>
-
           </div>
 
-
           <div class="table-wrap">
-
-            <table class="pair-table">
-
+            <table class="pair-table" id="pairTable">
               <thead>
                 <tr>
                   <th>#</th>
@@ -215,76 +886,51 @@
                   <th>Learning Partner</th>
                 </tr>
               </thead>
-
               <tbody>
-
 <tr><td>1</td><td>Frank Gentil</td><td>Van Joyce</td></tr>
 <tr><td>2</td><td>Thierry Ndinimana</td><td>Herve</td></tr>
-
 <tr><td>3</td><td>Kevin Irumva</td><td>Chloe Agasaro</td></tr>
 <tr><td>4</td><td>Daella Erica</td><td>Max Dalvin</td></tr>
-
 <tr><td>5</td><td>Cedrick Sugira</td><td>Jeanne Uwayisaba</td></tr>
 <tr><td>6</td><td>Emery Baziga</td><td>Sophie Tumukunde</td></tr>
-
 <tr><td>7</td><td>Dernick Hirwa</td><td>Hope Mary</td></tr>
 <tr><td>8</td><td>Adjira Kabera</td><td>Marianne Dukuzimana</td></tr>
-
 <tr><td>9</td><td>Kelvin Ibyimanikora</td><td>Ratifa Iragena</td></tr>
 <tr><td>10</td><td>Frank Habumugisha</td><td>Adeline Uwimana</td></tr>
-
 <tr><td>11</td><td>Sandia Gisa</td><td>Benjamin Mukunzi</td></tr>
 <tr><td>12</td><td>Hyacinthe Niyonizera</td><td>Moise Steven</td></tr>
-
 <tr><td>13</td><td>Ella Keyla</td><td>Josee Happiness</td></tr>
 <tr><td>14</td><td>Fiacre Usengimana</td><td>Leanne Irasubiza</td></tr>
-
 <tr><td>15</td><td>Philbert Irakoze</td><td>Chance Flora</td></tr>
 <tr><td>16</td><td>Forever Hyacinthe</td><td>Jane Batakariza</td></tr>
-
 <tr><td>17</td><td>Glennah Keziah</td><td>Joy Nkurunziza</td></tr>
 <tr><td>18</td><td>Isaac Sendagire</td><td>Justin Tuyikunde</td></tr>
-
 <tr><td>19</td><td>Dieudonne Byishimo</td><td>Hillary Umuhire</td></tr>
 <tr><td>20</td><td>Benis Divin Irakoze</td><td>Gilles Corentin</td></tr>
-
 <tr><td>21</td><td>Sifa Ornella Ihoza</td><td>Heritier Ineza</td></tr>
 <tr><td>22</td><td>Gaella Umugisha</td><td>Florent Nisingizwe</td></tr>
-
 <tr><td>23</td><td>Desire Ntwari Ngeri</td><td>Ines Omega Kamikazi</td></tr>
 <tr><td>24</td><td>Bruce Irakoze</td><td>Noella Niyomuhoza</td></tr>
-
 <tr><td>25</td><td>Olivier Tuyizere</td><td>Ange Life Amizero</td></tr>
 <tr><td>26</td><td>Wilson Kanyamfura</td><td>Divine Niyigena</td></tr>
-
 <tr><td>27</td><td>Nancy Stella Mizero</td><td>Clement Iradukunda</td></tr>
 <tr><td>28</td><td>Betty Uwase</td><td>Charlotte Uwizeyimana</td></tr>
-
 <tr><td>29</td><td>Herve Nyirikinkindi</td><td>Isaac Munezero</td></tr>
 <tr><td>30</td><td>Hamed Hussein</td><td>Prince Emmanuel</td></tr>
-
 <tr><td>31</td><td>Faith Louange</td><td>Guilaine Ngoga</td></tr>
 <tr><td>32</td><td>Clarisse Kayitavu</td><td>Gisele Uwase</td></tr>
-
 <tr><td>33</td><td>Credo Assumptus</td><td>Nadine Umuhire</td></tr>
 <tr><td>34</td><td>Presley Mukunzi</td><td>Jean D'amour N.</td></tr>
-
 <tr><td>35</td><td>Yannick Ineza</td><td>Esther Agasaro Isugi</td></tr>
 <tr><td>36</td><td>Flora Uwamariya</td><td>Marius Kigwira</td></tr>
-
 <tr><td>37</td><td>Irine Gihozo</td><td>Kedia Keza Isimbi</td></tr>
 <tr><td>38</td><td>Totis Irakoze</td><td>Bertin Ihirwe</td></tr>
-
 <tr><td>39</td><td>Germaine Rugwiro Shema</td><td>Dieudonne Amani</td></tr>
 <tr><td>40</td><td>Flora Uwamariya</td><td>Kheila Verra</td></tr>
-
 <tr><td>41</td><td>Munezero Bertille</td><td>Uwurukundo Jean Yves</td></tr>
               </tbody>
-
             </table>
-
           </div>
-
         </div>
 
       </section>
@@ -296,236 +942,180 @@
         <div class="section-title">
           <p class="eyebrow">ASSIGNMENTS</p>
           <h1>Tasks</h1>
-          <p class="muted">
-            Choose a class to view assignments and notifications.
-          </p>
+          <p class="muted">Choose a class to view assignments and notifications.</p>
         </div>
 
-        <!-- CLASS BUTTONS -->
         <div class="class-buttons">
-
-          <button class="class-button" data-class="writers" type="button">
-            ✍️ Writer's Workshop
-          </button>
-
-          <button class="class-button" data-class="reading" type="button">
-            📖 Guided Reading
-          </button>
-
-          <button class="class-button" data-class="learn" type="button">
-            🧠 How To Learn
-          </button>
-
-          <button class="class-button" data-class="language" type="button">
-            🔤 Language Lab
-          </button>
-
-          <button class="class-button" data-class="communication" type="button">
-            💬 Communication art
-          </button>
-
-          <button class="class-button" data-class="discipleship" type="button">
-            🤝 Discipleship
-          </button>
-
-          <button class="class-button" data-class="mental" type="button">
-            ❤️ Mental health
-          </button>
-
+          <button class="class-button" data-class="writers" type="button">Writer's Workshop</button>
+          <button class="class-button" data-class="reading" type="button">Guided Reading</button>
+          <button class="class-button" data-class="learn" type="button">How To Learn</button>
+          <button class="class-button" data-class="language" type="button">Language Lab</button>
+          <button class="class-button" data-class="communication" type="button">Communication Art</button>
+          <button class="class-button" data-class="discipleship" type="button">Discipleship</button>
+          <button class="class-button" data-class="mental" type="button">Mental Health</button>
         </div>
 
-
-        <!-- WRITER'S WORKSHOP -->
         <div class="class-content" id="writers">
           <div class="task-section">
             <h2>Writer's Workshop</h2>
-
             <div class="task-grid">
               <article class="task-card">
                 <h3>Write an informative essay</h3>
-                <p>
-                  Complete your first draft as soon as possible because
-                  assignments are increasing over time.
-                </p>
+                <p>Complete your first draft as soon as possible because assignments are increasing over time.</p>
               </article>
-
               <article class="task-card">
                 <h3>Writing strong introduction</h3>
-                <p>
-                  Write a strong hook, background and thesis statement.
-                </p>
+                <p>Write a strong hook, background and thesis statement.</p>
               </article>
             </div>
           </div>
         </div>
 
-
-        <!-- GUIDED READING -->
         <div class="class-content" id="reading">
           <div class="task-section">
             <h2>Guided Reading</h2>
-
             <div class="task-grid">
               <article class="task-card">
-                <h3>August 14, 2026 : Novel study</h3>
-                <p>
-                  Dear year one scholar, please read the novel
-                  from chapter 15 to chapter 26.
-                </p>
+                <h3>August 14, 2026 — Novel study</h3>
+                <p>Dear year one scholar, please read the novel from chapter 15 to chapter 26.</p>
               </article>
             </div>
           </div>
         </div>
 
-
-        <!-- HOW TO LEARN -->
         <div class="class-content" id="learn">
           <div class="task-section">
             <h2>How To Learn</h2>
-
             <div class="task-grid">
               <article class="task-card">
-                <h3>August 15, 2026 : Recent assignment</h3>
-                <p>
-                  Assignment: After_Wed_Class Assignment:
-                  Ask Better Questions in One Subject:
-                  Due tomorrow 8:30 AM.
-                </p>
+                <h3>August 15, 2026 — Recent assignment</h3>
+                <p>After Wed Class: Ask Better Questions in One Subject. Due tomorrow at 8:30 AM.</p>
               </article>
             </div>
           </div>
         </div>
 
-
-        <!-- LANGUAGE LAB -->
         <div class="class-content" id="language">
           <div class="task-section">
             <h2>Language Lab</h2>
-
             <div class="task-grid">
               <article class="task-card">
                 <h3>No assignments added yet</h3>
-                <p>
-                  There are currently no Language Lab assignments.
-                </p>
+                <p>There are currently no Language Lab assignments.</p>
               </article>
             </div>
           </div>
         </div>
 
-
-        <!-- COMMUNICATION ART -->
         <div class="class-content" id="communication">
           <div class="task-section">
-            <h2>Communication art</h2>
-
+            <h2>Communication Art</h2>
             <div class="task-grid">
               <article class="task-card">
-
-                <h3>August 15, 2026 : Announcement</h3>
-
-                <p><strong>💔 A HEARTBREAKING GOODBYE 💔</strong></p>
-
-                <p>
-                  It is with extremely heavy hearts that we announce
-                  that our two lovely teachers, Nathan and Perfect,
-                  will be leaving our campus this Friday.
-                </p>
-
-                <p>
-                  Some goodbyes are difficult to say,
-                  but this one feels almost impossible.
-                </p>
-
-                <p>
-                  Nathan and Perfect have been more than just teachers.
-                  They have been people who encouraged us, guided us,
-                  listened to us, made us laugh, and made our campus
-                  feel like a better place.
-                </p>
-
-                <p>
-                  Their presence has touched so many students,
-                  and their absence will leave a space that will be
-                  incredibly difficult to fill.
-                </p>
-
-                <p>
-                  It hurts to know that after Friday, we will no longer
-                  see them walking through our campus, teaching in our
-                  classrooms, sharing their smiles, and being part of
-                  our everyday lives.
-                </p>
-
-                <p>
-                  Nathan and Perfect, thank you for every lesson,
-                  every conversation, every laugh, every piece of advice,
-                  and every moment you gave us.
-                </p>
-
-                <p>
-                  We may have to say goodbye, but we will never forget
-                  the impact you had on us.
-                </p>
-
-                <p>
-                  Friday will not just be another day on campus.
-                </p>
-
-                <p>
-                  It will be the day we say goodbye to two people
-                  we wish we could keep forever. 😭💔
-                </p>
-
-                <p>
-                  We love you. We appreciate you.
-                  And we will miss you more than words can ever explain.
-                </p>
-
-                <p>
-                  Thank you for everything, Nathan and Perfect. ❤️
-                </p>
-
-                <p>
-                  You will always have a place in our campus family.
-                </p>
-
+                <h3>August 15, 2026 — Announcement</h3>
+                <p><strong>A Heartbreaking Goodbye</strong></p>
+                <p>It is with extremely heavy hearts that we announce that our two lovely teachers, Nathan and Perfect, will be leaving our campus this Friday.</p>
+                <p>Some goodbyes are difficult to say, but this one feels almost impossible.</p>
+                <p>Nathan and Perfect have been more than just teachers. They have been people who encouraged us, guided us, listened to us, made us laugh, and made our campus feel like a better place.</p>
+                <p>Their presence has touched so many students, and their absence will leave a space that will be incredibly difficult to fill.</p>
+                <p>Nathan and Perfect, thank you for every lesson, every conversation, every laugh, every piece of advice, and every moment you gave us. We will never forget the impact you had on us.</p>
+                <p>We love you. We appreciate you. And we will miss you more than words can ever explain.</p>
+                <p>Thank you for everything, Nathan and Perfect. You will always have a place in our campus family.</p>
               </article>
             </div>
           </div>
         </div>
 
-
-        <!-- DISCIPLESHIP -->
         <div class="class-content" id="discipleship">
           <div class="task-section">
             <h2>Discipleship</h2>
-
             <div class="task-grid">
               <article class="task-card">
                 <h3>No assignments added yet</h3>
-                <p>
-                  There are currently no Discipleship assignments.
-                </p>
+                <p>There are currently no Discipleship assignments.</p>
               </article>
             </div>
           </div>
         </div>
 
-
-        <!-- MENTAL HEALTH -->
         <div class="class-content" id="mental">
           <div class="task-section">
-            <h2>Mental health</h2>
-
+            <h2>Mental Health</h2>
             <div class="task-grid">
               <article class="task-card">
                 <h3>No assignments added yet</h3>
-                <p>
-                  There are currently no Mental Health assignments.
-                </p>
+                <p>There are currently no Mental Health assignments.</p>
               </article>
             </div>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- CHAT PAGE -->
+      <section class="page" id="chat">
+
+        <div class="chat-header">
+          <p class="eyebrow">REAL-TIME</p>
+          <h1>Class Chat</h1>
+          <p><span class="chat-online-dot"></span>All students with accounts can chat here</p>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-empty" id="chatEmpty">
+            <div class="chat-empty-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" opacity="0.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <p>No messages yet. Be the first to say hi!</p>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <textarea id="chatInput" placeholder="Type a message..." rows="1"></textarea>
+          <button id="chatSend" type="button" title="Send message">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+
+      </section>
+
+
+      <!-- PROFILE PAGE -->
+      <section class="page" id="profile">
+
+        <div class="section-title">
+          <p class="eyebrow">ACCOUNT</p>
+          <h1>My Profile</h1>
+          <p class="muted">Your student account information.</p>
+        </div>
+
+        <div class="profile-hero">
+          <div class="user-avatar-lg" id="profileAvatar">?</div>
+          <div class="profile-hero-info">
+            <h2 id="profileFullName">Loading...</h2>
+            <p class="profile-email" id="profileEmail">...</p>
+            <div class="profile-badge">Active student</div>
+          </div>
+        </div>
+
+        <div class="profile-cards">
+          <div class="profile-info-card">
+            <div class="pic-label">First Name</div>
+            <div class="pic-value" id="profileFirstName">—</div>
+          </div>
+          <div class="profile-info-card">
+            <div class="pic-label">Last Name</div>
+            <div class="pic-value" id="profileSecondName">—</div>
+          </div>
+          <div class="profile-info-card">
+            <div class="pic-label">Email Address</div>
+            <div class="pic-value" id="profileEmailCard" style="font-size:13px;">—</div>
+          </div>
+          <div class="profile-info-card">
+            <div class="pic-label">Account Status</div>
+            <div class="pic-value" style="color: var(--success);">Verified</div>
+            <div class="pic-sub">Firebase authenticated</div>
           </div>
         </div>
 
@@ -536,7 +1126,7 @@
   </div>
 
 
-  <!-- Firebase SDK (compat, no build step needed) -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
@@ -544,9 +1134,376 @@
   <script src="./firebase-config.js"></script>
   <script src="./auth.js"></script>
 
-  <script src="./script.js"></script>
+  <script>
+  /* ════════════════════════════════════════════════════════════════
+     PAIRLY — MAIN SCRIPT
+     Expects auth.js / firebase-config.js to initialize firebase.
+     Expects Firestore `users` collection with:
+       { firstName, secondName, email, uid }
+  ════════════════════════════════════════════════════════════════ */
 
-  <!-- Vercel Analytics Tracking Code -->
+  const db   = firebase.firestore();
+  const auth = firebase.auth();
+
+  // ── State ──────────────────────────────────────────────────────
+  let currentUser      = null;
+  let currentUserData  = null;
+  let chatUnsubscribe  = null;
+  let unseenCount      = 0;
+  let isOnChatPage     = false;
+  let lastMessageCount = 0;
+
+  // ── Auth state ─────────────────────────────────────────────────
+  auth.onAuthStateChanged(async (user) => {
+    if (user) {
+      currentUser = user;
+      await loadUserData(user.uid);
+      showApp();
+      initChat();
+    } else {
+      currentUser    = null;
+      currentUserData = null;
+      hideApp();
+      if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; }
+    }
+  });
+
+  async function loadUserData(uid) {
+    try {
+      const doc = await db.collection('users').doc(uid).get();
+      if (doc.exists) {
+        currentUserData = doc.data();
+      } else {
+        // Fallback: build from auth profile if Firestore doc missing
+        const parts = (auth.currentUser.displayName || '').split(' ');
+        currentUserData = {
+          firstName:  parts[0] || 'Student',
+          secondName: parts.slice(1).join(' ') || '',
+          email:      auth.currentUser.email
+        };
+      }
+      renderUserUI();
+    } catch (e) {
+      console.warn('Could not load user data:', e);
+      currentUserData = { firstName: 'Student', secondName: '', email: currentUser.email };
+      renderUserUI();
+    }
+  }
+
+  function renderUserUI() {
+    if (!currentUserData) return;
+    const { firstName, secondName, email } = currentUserData;
+    const fullName   = [firstName, secondName].filter(Boolean).join(' ');
+    const initials   = ((firstName || '?')[0] + (secondName || '')[0]).toUpperCase().trim() || '?';
+    const displayName = secondName ? secondName : firstName;
+
+    // Topbar greeting — shows last name
+    document.getElementById('greeting').innerHTML =
+      'Hello, <strong>' + displayName + '</strong>';
+
+    // Sidebar
+    document.getElementById('sidebarAvatar').textContent = initials;
+    document.getElementById('sidebarName').textContent   = fullName;
+    document.getElementById('sidebarEmail').textContent  = email || '';
+
+    // Profile page
+    document.getElementById('profileAvatar').textContent     = initials;
+    document.getElementById('profileFullName').textContent   = fullName;
+    document.getElementById('profileEmail').textContent      = email || '';
+    document.getElementById('profileFirstName').textContent  = firstName || '—';
+    document.getElementById('profileSecondName').textContent = secondName || '—';
+    document.getElementById('profileEmailCard').textContent  = email || '—';
+  }
+
+  function showApp() {
+    document.getElementById('authScreen').classList.add('hidden');
+    document.querySelector('.app-shell').classList.remove('hidden');
+  }
+  function hideApp() {
+    document.getElementById('authScreen').classList.remove('hidden');
+    document.querySelector('.app-shell').classList.add('hidden');
+  }
+
+  // ── Auth forms ─────────────────────────────────────────────────
+  document.getElementById('showSignup').addEventListener('click', () => {
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('signupForm').classList.remove('hidden');
+    document.getElementById('authError').textContent = '';
+  });
+  document.getElementById('showLogin').addEventListener('click', () => {
+    document.getElementById('signupForm').classList.add('hidden');
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('authError').textContent = '';
+  });
+
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errEl    = document.getElementById('authError');
+    errEl.textContent = '';
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+    } catch (err) {
+      errEl.textContent = err.message;
+    }
+  });
+
+  document.getElementById('signupForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const firstName  = document.getElementById('signupFirstName').value.trim();
+    const secondName = document.getElementById('signupSecondName').value.trim();
+    const email      = document.getElementById('signupEmail').value.trim();
+    const password   = document.getElementById('signupPassword').value;
+    const errEl      = document.getElementById('authError');
+    errEl.textContent = '';
+    try {
+      const cred = await auth.createUserWithEmailAndPassword(email, password);
+      // Save profile to Firestore
+      await db.collection('users').doc(cred.user.uid).set({
+        firstName,
+        secondName,
+        email,
+        uid:       cred.user.uid,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (err) {
+      errEl.textContent = err.message;
+    }
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    auth.signOut();
+  });
+
+  // ── Navigation ─────────────────────────────────────────────────
+  document.querySelectorAll('[data-page]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = btn.dataset.page;
+      navigateTo(page);
+      // Close mobile sidebar
+      document.getElementById('sidebar').classList.remove('open');
+    });
+  });
+
+  function navigateTo(pageId) {
+    // Pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(pageId);
+    if (target) target.classList.add('active');
+
+    // Nav items
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('[data-page="' + pageId + '"]').forEach(n => n.classList.add('active'));
+
+    // Chat tracking
+    isOnChatPage = (pageId === 'chat');
+    if (isOnChatPage) {
+      unseenCount = 0;
+      updateChatBadge();
+      scrollChatToBottom();
+    }
+  }
+
+  // Mobile menu
+  document.getElementById('mobileMenu').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+
+  // ── Task class tabs ────────────────────────────────────────────
+  document.querySelectorAll('.class-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cls = btn.dataset.class;
+      document.querySelectorAll('.class-button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.class-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      const content = document.getElementById(cls);
+      if (content) content.classList.add('active');
+    });
+  });
+
+  // ── Pair search ────────────────────────────────────────────────
+  document.getElementById('searchStudent').addEventListener('click', searchPair);
+  document.getElementById('studentSearch').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') searchPair();
+  });
+
+  function searchPair() {
+    const query = document.getElementById('studentSearch').value.trim().toLowerCase();
+    const result = document.getElementById('pairResult');
+    const table  = document.getElementById('pairTable');
+
+    if (!query) return;
+
+    const rows = table.querySelectorAll('tbody tr');
+    let found = null;
+
+    table.classList.remove('highlighted');
+    rows.forEach(r => r.classList.remove('match'));
+
+    rows.forEach(row => {
+      const s1 = row.cells[1]?.textContent.toLowerCase() || '';
+      const s2 = row.cells[2]?.textContent.toLowerCase() || '';
+      if (s1.includes(query) || s2.includes(query)) {
+        if (!found) found = { student: row.cells[1].textContent, partner: row.cells[2].textContent };
+        row.classList.add('match');
+      }
+    });
+
+    if (found) {
+      table.classList.add('highlighted');
+      const i1 = found.student.trim()[0] || '?';
+      const i2 = found.partner.trim()[0] || '?';
+      result.innerHTML =
+        '<div class="pair-found">' +
+          '<div class="pair-person">' +
+            '<div class="avatar">' + i1.toUpperCase() + '</div>' +
+            '<strong>' + found.student + '</strong>' +
+            '<span>Student</span>' +
+          '</div>' +
+          '<div class="pair-connector">' +
+            '<svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 12h8"/><path d="M12 8l4 4-4 4"/></svg>' +
+            '<span>paired with</span>' +
+          '</div>' +
+          '<div class="pair-person">' +
+            '<div class="avatar" style="background: linear-gradient(135deg, #34d399, #059669)">' + i2.toUpperCase() + '</div>' +
+            '<strong>' + found.partner + '</strong>' +
+            '<span>Learning Partner</span>' +
+          '</div>' +
+        '</div>';
+      // Scroll table row into view
+      const matchRow = table.querySelector('tbody tr.match');
+      if (matchRow) matchRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      result.innerHTML =
+        '<div class="result-placeholder">' +
+          '<div class="placeholder-icon"><svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" opacity="0.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>' +
+          '<h3>No match found</h3>' +
+          '<p>Try searching with a different spelling.</p>' +
+        '</div>';
+    }
+  }
+
+  // ── Chat ───────────────────────────────────────────────────────
+  function initChat() {
+    if (chatUnsubscribe) return;
+
+    chatUnsubscribe = db.collection('messages')
+      .orderBy('createdAt', 'asc')
+      .limit(200)
+      .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === 'added') {
+            const data = change.doc.data();
+            if (data.createdAt) {
+              appendMessage(data);
+              if (!isOnChatPage) {
+                unseenCount++;
+                updateChatBadge();
+              }
+            }
+          }
+        });
+        const emptyEl = document.getElementById('chatEmpty');
+        if (emptyEl) {
+          const msgCount = document.querySelectorAll('.chat-msg').length;
+          emptyEl.style.display = msgCount > 0 ? 'none' : 'flex';
+        }
+        if (isOnChatPage) scrollChatToBottom();
+      }, (err) => {
+        console.warn('Chat error:', err);
+      });
+  }
+
+  function appendMessage(data) {
+    const container = document.getElementById('chatMessages');
+    const emptyEl   = document.getElementById('chatEmpty');
+    if (emptyEl) emptyEl.style.display = 'none';
+
+    const isMine = currentUser && data.uid === currentUser.uid;
+    const name   = data.displayName || 'Unknown';
+    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    const time   = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+
+    const msgEl = document.createElement('div');
+    msgEl.className = 'chat-msg' + (isMine ? ' mine' : '');
+    msgEl.innerHTML =
+      '<div class="chat-msg-avatar">' + initials + '</div>' +
+      '<div class="chat-msg-body">' +
+        '<div class="chat-msg-meta">' +
+          (isMine ? '' : '<span class="chat-msg-name">' + escHtml(name) + '</span>') +
+          '<span>' + time + '</span>' +
+        '</div>' +
+        '<div class="chat-bubble">' + escHtml(data.text) + '</div>' +
+      '</div>';
+
+    container.appendChild(msgEl);
+  }
+
+  function scrollChatToBottom() {
+    const container = document.getElementById('chatMessages');
+    if (container) container.scrollTop = container.scrollHeight;
+  }
+
+  function updateChatBadge() {
+    const badge = document.getElementById('chatBadge');
+    if (!badge) return;
+    if (unseenCount > 0) {
+      badge.textContent = unseenCount > 99 ? '99+' : String(unseenCount);
+      badge.classList.add('show');
+    } else {
+      badge.classList.remove('show');
+    }
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text  = input.value.trim();
+    if (!text || !currentUser || !currentUserData) return;
+
+    const displayName = [currentUserData.firstName, currentUserData.secondName]
+      .filter(Boolean).join(' ') || 'Student';
+
+    input.value = '';
+    input.style.height = 'auto';
+
+    try {
+      await db.collection('messages').add({
+        text,
+        uid:         currentUser.uid,
+        displayName,
+        createdAt:   firebase.firestore.FieldValue.serverTimestamp()
+      });
+    } catch (err) {
+      console.error('Send failed:', err);
+      input.value = text;
+    }
+  }
+
+  document.getElementById('chatSend').addEventListener('click', sendMessage);
+  document.getElementById('chatInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  // Auto-resize textarea
+  document.getElementById('chatInput').addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+  </script>
+
+  <!-- Vercel Analytics -->
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
