@@ -87,6 +87,13 @@
 
       const cred = await auth.createUserWithEmailAndPassword(email, password);
 
+      // Store the name in Firebase Authentication too. This gives us a
+      // reliable fallback if the Firestore profile is temporarily unavailable.
+      const fullName = [firstName, secondName].filter(Boolean).join(" ");
+      await cred.user.updateProfile({
+        displayName: fullName
+      });
+
       // IMPORTANT: use ONE collection everywhere: students
       await db.collection("students").doc(cred.user.uid).set({
         firstName,
@@ -119,34 +126,64 @@
 
     showApp();
 
-    // Load student profile from the SAME "students" collection used at signup.
+    // Load the student's profile from students/{UID}.
+    // The same UID is used by Firebase Authentication and Firestore.
     let profile = null;
 
     try {
-      const doc = await db.collection("students").doc(user.uid).get();
+      const docRef = db.collection("students").doc(user.uid);
+      const doc = await docRef.get();
 
       if (doc.exists) {
         profile = doc.data();
-      } else {
-        // Create a fallback profile so the rest of the app can still work.
-        const fallbackName = user.displayName || "Student";
-        const parts = fallbackName.trim().split(/\s+/);
+
+        // Keep the Authentication display name synchronized with Firestore.
+        const fullName = [profile.firstName, profile.secondName]
+          .filter(Boolean)
+          .join(" ");
+
+        if (fullName && user.displayName !== fullName) {
+          await user.updateProfile({ displayName: fullName });
+        }
+      } else if (user.displayName) {
+        // If the Firestore document is missing but Authentication has the
+        // name, rebuild the profile automatically.
+        const parts = user.displayName.trim().split(/\\s+/);
 
         profile = {
-          firstName: parts[0] || "Student",
+          firstName: parts[0] || "",
           secondName: parts.slice(1).join(" "),
+          email: user.email || "",
+          uid: user.uid
+        };
+
+        // Repair the missing Firestore document.
+        await docRef.set({
+          ...profile,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+      } else {
+        // No saved name exists anywhere. Do not pretend that the user's
+        // first name is "Student"; show a clear placeholder instead.
+        profile = {
+          firstName: "",
+          secondName: "",
           email: user.email || "",
           uid: user.uid
         };
       }
     } catch (err) {
-      console.warn("Could not load student profile:", err);
+      console.error("Could not load student profile:", err);
 
-      const fallbackName = user.displayName || "Student";
-      const parts = fallbackName.trim().split(/\s+/);
+      // If Firestore is unavailable because of rules/network, still use
+      // Firebase Authentication's saved displayName when available.
+      const fallbackName = user.displayName || "";
+      const parts = fallbackName.trim()
+        ? fallbackName.trim().split(/\\s+/)
+        : [];
 
       profile = {
-        firstName: parts[0] || "Student",
+        firstName: parts[0] || "",
         secondName: parts.slice(1).join(" "),
         email: user.email || "",
         uid: user.uid
@@ -164,7 +201,7 @@
   });
 
   function renderProfile(profile, user) {
-    const firstName = profile.firstName || "Student";
+    const firstName = profile.firstName || "";
     const secondName = profile.secondName || "";
     const email = profile.email || user.email || "";
     const fullName = [firstName, secondName].filter(Boolean).join(" ");
@@ -172,7 +209,7 @@
       (firstName[0] || "") + (secondName[0] || "")
     ).toUpperCase() || "?";
 
-    const greetingName = secondName || firstName;
+    const greetingName = secondName || firstName || "there";
 
     setText("greeting", `Hello, ${greetingName}`);
     setText("sidebarAvatar", initials);
